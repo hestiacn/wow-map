@@ -941,3 +941,171 @@ kbd {
 .size-info p {
   margin: 2px 0;
 }
+/* 数据来源样式 */
+.source-subnames {
+  color: #28a745;
+  font-weight: bold;
+  background: #d4edda;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.source-main {
+  color: #dc3545;
+  font-weight: bold;
+  background: #f8d7da;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.save-hint.success {
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+
+.save-hint.success .hint-icon {
+  color: #28a745;
+}
+
+/* 添加区域文本标注的特殊样式 */
+.region-text-info {
+  border-left: 3px solid #4CAF50;
+  padding-left: 10px;
+  margin: 10px 0;
+}
+
+.language-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.language-text-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lang-label {
+  font-weight: bold;
+  min-width: 40px;
+  color: #666;
+}
+
+.text-content {
+  background: #f5f5f5;
+  padding: 4px 8px;
+  border-radius: 4px;
+  flex: 1;
+}
+
+.color-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.color-preview {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.save-hint {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 6px;
+  padding: 12px;
+  margin: 10px 0;
+}
+
+.save-hint .hint-icon {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.save-hint code {
+  background: #f8f9fa;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: monospace;
+  display: block;
+  margin: 8px 0;
+}
+
+.save-instruction {
+  background: #e7f3ff;
+  border: 1px solid #b3d9ff;
+  border-radius: 6px;
+  padding: 12px;
+  margin: 10px 0;
+}
+
+.instruction-header {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #0066cc;
+}
+
+.instruction-content code {
+  background: #f8f9fa;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: monospace;
+  display: block;
+  margin: 8px 0;
+  color: #d63384;
+}
+
+.color-picker-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.color-picker {
+  width: 50px;
+  height: 30px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.language-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.language-input-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.language-input-group label {
+  min-width: 60px;
+  font-weight: bold;
+}
+
+.language-input-group input {
+  flex: 1;
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.section-label {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.help-text {
+  color: #666;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
