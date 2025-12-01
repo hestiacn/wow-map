@@ -1,0 +1,498 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2024-01-15",
+  "regionTexts": [
+    {
+      "id": "elwynn-forest",
+      "position": {
+        "x": 1350,
+        "y": 1300
+      },
+      "languages": {
+        "zh": "艾尔文森林",
+        "en": "Elwynn Forest",
+        "ko": "엘윈 숲",
+        "ja": "エルウィンの森"
+      },
+      "textColor": "#4CAF50",
+      "fontSize": 28
+    },
+    {
+      "id": "westfall",
+      "position": {
+        "x": 1250,
+        "y": 1500
+      },
+      "languages": {
+        "zh": "西部荒野",
+        "en": "Westfall",
+        "ko": "서부 몰락지대",
+        "ja": "ウエストフォール"
+      },
+      "textColor": "#FF9800",
+      "fontSize": 24
+    },
+    {
+      "id": "redridge-mountains",
+      "position": {
+        "x": 1550,
+        "y": 1300
+      },
+      "languages": {
+        "zh": "赤脊山",
+        "en": "Redridge Mountains",
+        "ko": "붉은마루 산맥",
+        "ja": "レッドリッジマウンテン"
+      },
+      "textColor": "#F44336",
+      "fontSize": 22
+    },
+    {
+      "id": "duskwood",
+      "position": {
+        "x": 1450,
+        "y": 1450
+      },
+      "languages": {
+        "zh": "暮色森林",
+        "en": "Duskwood",
+        "ko": "그늘숲",
+        "ja": "ダスクウッド"
+      },
+      "textColor": "#673AB7",
+      "fontSize": 24
+    },
+    {
+      "id": "stranglethorn-vale",
+      "position": {
+        "x": 2000,
+        "y": 1800
+      },
+      "languages": {
+        "zh": "荆棘谷",
+        "en": "Stranglethorn Vale",
+        "ko": "가시덤불 골짜기",
+        "ja": "ストラングルソーンの谷"
+      },
+      "textColor": "#4CAF50",
+      "fontSize": 26
+    },
+    {
+      "id": "dun-morogh",
+      "position": {
+        "x": 1200,
+        "y": 800
+      },
+      "languages": {
+        "zh": "丹莫罗",
+        "en": "Dun Morogh",
+        "ko": "던 모로",
+        "ja": "ダンモロウ"
+      },
+      "textColor": "#2196F3",
+      "fontSize": 24
+    },
+    {
+      "id": "loch-modan",
+      "position": {
+        "x": 1400,
+        "y": 700
+      },
+      "languages": {
+        "zh": "洛克莫丹",
+        "en": "Loch Modan",
+        "ko": "모단 호수",
+        "ja": "ロックモダン"
+      },
+      "textColor": "#2196F3",
+      "fontSize": 22
+    },
+    {
+      "id": "wetlands",
+      "position": {
+        "x": 1300,
+        "y": 600
+      },
+      "languages": {
+        "zh": "湿地",
+        "en": "Wetlands",
+        "ko": "저습지",
+        "ja": "ウェットランド"
+      },
+      "textColor": "#4CAF50",
+      "fontSize": 20
+    },
+    {
+      "id": "arathi-highlands",
+      "position": {
+        "x": 1900,
+        "y": 1000
+      },
+      "languages": {
+        "zh": "阿拉希高地",
+        "en": "Arathi Highlands",
+        "ko": "아라시 고원",
+        "ja": "アラシ高原"
+      },
+      "textColor": "#FF9800",
+      "fontSize": 22
+    },
+    {
+      "id": "hillsbrad-foothills",
+      "position": {
+        "x": 1950,
+        "y": 1100
+      },
+      "languages": {
+        "zh": "希尔斯布莱德丘陵",
+        "en": "Hillsbrad Foothills",
+        "ko": "힐스브래드 구릉지",
+        "ja": "ヒルズブレード丘陵"
+      },
+      "textColor": "#4CAF50",
+      "fontSize": 20
+    },
+    {
+      "id": "alterac-mountains",
+      "position": {
+        "x": 1850,
+        "y": 1200
+      },
+      "languages": {
+        "zh": "奥特兰克山脉",
+        "en": "Alterac Mountains",
+        "ko": "알터랙 산맥",
+        "ja": "アルテラック山脈"
+      },
+      "textColor": "#9E9E9E",
+      "fontSize": 20
+    },
+    {
+      "id": "eastern-plaguelands",
+      "position": {
+        "x": 1750,
+        "y": 800
+      },
+      "languages": {
+        "zh": "东瘟疫之地",
+        "en": "Eastern Plaguelands",
+        "ko": "동부 역병지대",
+        "ja": "東部疫病地域"
+      },
+      "textColor": "#8BC34A",
+      "fontSize": 22
+    },
+    {
+      "id": "western-plaguelands",
+      "position": {
+        "x": 1650,
+        "y": 900
+      },
+      "languages": {
+        "zh": "西瘟疫之地",
+        "en": "Western Plaguelands",
+        "ko": "서부 역병지대",
+        "ja": "西部疫病地域"
+      },
+      "textColor": "#8BC34A",
+      "fontSize": 22
+    },
+    {
+      "id": "tirisfal-glades",
+      "position": {
+        "x": 1700,
+        "y": 950
+      },
+      "languages": {
+        "zh": "提瑞斯法林地",
+        "en": "Tirisfal Glades",
+        "ko": "티리스팔 숲",
+        "ja": "ティリスファル森林"
+      },
+      "textColor": "#4CAF50",
+      "fontSize": 22
+    },
+    {
+      "id": "silverpine-forest",
+      "position": {
+        "x": 1800,
+        "y": 1000
+      },
+      "languages": {
+        "zh": "银松森林",
+        "en": "Silverpine Forest",
+        "ko": "은빛소나무 숲",
+        "ja": "銀松の森"
+      },
+      "textColor": "#4CAF50",
+      "fontSize": 22
+    },
+    {
+      "id": "durotar",
+      "position": {
+        "x": 1500,
+        "y": 4100
+      },
+      "languages": {
+        "zh": "杜隆塔尔",
+        "en": "Durotar",
+        "ko": "듀로타",
+        "ja": "デュロタ"
+      },
+      "textColor": "#F44336",
+      "fontSize": 24
+    },
+    {
+      "id": "the-barrens",
+      "position": {
+        "x": 1500,
+        "y": 3900
+      },
+      "languages": {
+        "zh": "贫瘠之地",
+        "en": "The Barrens",
+        "ko": "불모의 땅",
+        "ja": "荒地"
+      },
+      "textColor": "#FF9800",
+      "fontSize": 26
+    },
+    {
+    "id": "darnassus",
+    "position": { "x": 1068, "y": 865},
+    "languages": {
+        "zh": "达纳苏斯",
+        "en": "Darnassus",
+        "ko": "다르나서스",
+        "ja": "ダーナサス"
+    },
+    "textColor": "#3E9CCA",
+    "fontSize": 42
+    },
+    {
+      "id": "mulgore",
+      "position": {
+        "x": 1300,
+        "y": 3800
+      },
+      "languages": {
+        "zh": "莫高雷",
+        "en": "Mulgore",
+        "ko": "멀고어",
+        "ja": "マルゴレ"
+      },
+      "textColor": "#4CAF50",
+      "fontSize": 24
+    },
+    {
+      "id": "stonetalon-mountains",
+      "position": {
+        "x": 1700,
+        "y": 3700
+      },
+      "languages": {
+        "zh": "石爪山脉",
+        "en": "Stonetalon Mountains",
+        "ko": "돌발톱 산맥",
+        "ja": "ストネーション山脈"
+      },
+      "textColor": "#795548",
+      "fontSize": 22
+    },
+    {
+      "id": "ashenvale",
+      "position": {
+        "x": 1900,
+        "y": 3500
+      },
+      "languages": {
+        "zh": "灰谷",
+        "en": "Ashenvale",
+        "ko": "잿빛 골짜기",
+        "ja": "アッシュベイル"
+      },
+      "textColor": "#4CAF50",
+      "fontSize": 24
+    },
+    {
+      "id": "thousand-needles",
+      "position": {
+        "x": 1800,
+        "y": 3200
+      },
+      "languages": {
+        "zh": "千针石林",
+        "en": "Thousand Needles",
+        "ko": "버섯구름 봉우리",
+        "ja": "サウスシーロード"
+      },
+      "textColor": "#FF9800",
+      "fontSize": 22
+    },
+    {
+      "id": "desolace",
+      "position": {
+        "x": 1600,
+        "y": 3400
+      },
+      "languages": {
+        "zh": "凄凉之地",
+        "en": "Desolace",
+        "ko": "잊혀진 땅",
+        "ja": "デソレース"
+      },
+      "textColor": "#9E9E9E",
+      "fontSize": 22
+    },
+    {
+      "id": "feralas",
+      "position": {
+        "x": 1400,
+        "y": 3200
+      },
+      "languages": {
+        "zh": "菲拉斯",
+        "en": "Feralas",
+        "ko": "페랄라스",
+        "ja": "フェララス"
+      },
+      "textColor": "#4CAF50",
+      "fontSize": 22
+    },
+    {
+      "id": "dustwallow-marsh",
+      "position": {
+        "x": 2500,
+        "y": 3400
+      },
+      "languages": {
+        "zh": "尘泥沼泽",
+        "en": "Dustwallow Marsh",
+        "ko": "먼지진흙 습지대",
+        "ja": "ダストウォロウ湿原"
+      },
+      "textColor": "#8BC34A",
+      "fontSize": 22
+    },
+    {
+      "id": "tanaris",
+      "position": {
+        "x": 2100,
+        "y": 3000
+      },
+      "languages": {
+        "zh": "塔纳利斯",
+        "en": "Tanaris",
+        "ko": "타나리스",
+        "ja": "タナリス"
+      },
+      "textColor": "#FF9800",
+      "fontSize": 24
+    },
+    {
+      "id": "ungoro-crater",
+      "position": {
+        "x": 2300,
+        "y": 2800
+      },
+      "languages": {
+        "zh": "安戈洛环形山",
+        "en": "Un'Goro Crater",
+        "ko": "운고로 분화구",
+        "ja": "アンゴロスクレーター"
+      },
+      "textColor": "#4CAF50",
+      "fontSize": 20
+    },
+    {
+      "id": "silithus",
+      "position": {
+        "x": 1900,
+        "y": 2800
+      },
+      "languages": {
+        "zh": "希利苏斯",
+        "en": "Silithus",
+        "ko": "실리더스",
+        "ja": "シリタス"
+      },
+      "textColor": "#FF9800",
+      "fontSize": 22
+    },
+    {
+      "id": "winterspring",
+      "position": {
+        "x": 2200,
+        "y": 2500
+      },
+      "languages": {
+        "zh": "冬泉谷",
+        "en": "Winterspring",
+        "ko": "여명의 설원",
+        "ja": "ウィンタースプリング"
+      },
+      "textColor": "#2196F3",
+      "fontSize": 22
+    },
+    {
+      "id": "felwood",
+      "position": {
+        "x": 2000,
+        "y": 2700
+      },
+      "languages": {
+        "zh": "费伍德森林",
+        "en": "Felwood",
+        "ko": "악령의 숲",
+        "ja": "フェルウッド"
+      },
+      "textColor": "#4CAF50",
+      "fontSize": 22
+    },
+    {
+      "id": "azshara",
+      "position": {
+        "x": 1800,
+        "y": 2900
+      },
+      "languages": {
+        "zh": "艾萨拉",
+        "en": "Azshara",
+        "ko": "아즈샤라",
+        "ja": "アズシャラ"
+      },
+      "textColor": "#2196F3",
+      "fontSize": 22
+    },
+    {
+      "id": "teldrassil",
+      "position": {
+        "x": 4000,
+        "y": 3100
+      },
+      "languages": {
+        "zh": "泰达希尔",
+        "en": "Teldrassil",
+        "ko": "텔드랏실",
+        "ja": "テルドラシル"
+      },
+      "textColor": "#4CAF50",
+      "fontSize": 24
+    },
+    {
+      "id": "darkshore",
+      "position": {
+        "x": 3700,
+        "y": 3000
+      },
+      "languages": {
+        "zh": "黑海岸",
+        "en": "Darkshore",
+        "ko": "검은늪",
+        "ja": "ダークショア"
+      },
+      "textColor": "#673AB7",
+      "fontSize": 22
+    }
+  ]
+}

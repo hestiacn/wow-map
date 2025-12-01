@@ -1,0 +1,757 @@
+{
+  "points": {
+    "flightPoints": [
+      {
+        "id": "stormwind",
+        "name": { "zh": "暴风城", "en": "Stormwind City" },
+        "type": "capital",
+        "faction": "alliance",
+        "region": "eastern-kingdoms",
+        "position": { "x": 6582, "y": 5313 },
+        "connections": ["ironforge", "darkshire", "lakeshire", "sentinelhill", "bootybay", "nethergarde", "morganvigil", "menethil", "thoriumpoint"]
+      },
+      {
+        "id": "ironforge",
+        "name": { "zh": "铁炉堡", "en": "Ironforge" },
+        "type": "capital",
+        "faction": "alliance",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7055, "y": 3995 },
+        "connections": ["stormwind", "menethil", "thelsamar", "aeriepeak", "thoriumpoint", "refugepointe", "southshore", "chillwindcamp"]
+      },
+      {
+        "id": "darkshire",
+        "name": { "zh": "夜色镇", "en": "Darkshire" },
+        "type": "town",
+        "faction": "alliance",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7230, "y": 6018 },
+        "connections": ["stormwind", "lakeshire", "sentinelhill", "nethergarde"]
+      },
+      {
+        "id": "lakeshire", 
+        "name": { "zh": "湖畔镇", "en": "Lakeshire" },
+        "type": "town",
+        "faction": "alliance",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7550, "y": 5600 },
+        "connections": ["stormwind", "darkshire", "morganvigil", "thoriumpoint"]
+      },
+      {
+        "id": "sentinelhill",
+        "name": { "zh": "哨兵岭", "en": "Sentinel Hill" },
+        "type": "town", 
+        "faction": "alliance",
+        "region": "eastern-kingdoms",
+        "position": { "x": 6363, "y": 5959 },
+        "connections": ["stormwind", "darkshire", "bootybay"]
+      },
+      {
+        "id": "thelsamar",
+        "name": { "zh": "塞尔萨玛", "en": "Thelsamar" },
+        "type": "town",
+        "faction": "alliance",
+        "region": "eastern-kingdoms", 
+        "position": { "x": 7832, "y": 4171 },
+        "connections": ["ironforge", "aeriepeak", "refugepointe", "southshore"]
+      },
+      {
+        "id": "refugepointe",
+        "name": { "zh": "避难谷地", "en": "Refuge Pointe" },
+        "type": "town",
+        "faction": "alliance",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7656, "y": 2695 },
+        "connections": ["southshore", "aeriepeak", "ironforge", "thelsamar"]
+      },
+      {
+        "id": "aeriepeak",
+        "name": { "zh": "鹰巢山", "en": "Aerie Peak" },
+        "type": "town",
+        "faction": "alliance",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7463, "y": 2142 },
+        "connections": ["refugepointe", "southshore", "ironforge", "thelsamar", "chillwindcamp"]
+      },
+      {
+        "id": "chillwindcamp",
+        "name": { "zh": "冰风岗", "en": "Chillwind Camp" },
+        "type": "town",
+        "faction": "alliance",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7194, "y": 1980 },
+        "connections": ["southshore", "lightshope", "aeriepeak", "ironforge"]
+      },
+      {
+        "id": "southshore",
+        "name": { "zh": "南海镇", "en": "Southshore" },
+        "type": "town",
+        "faction": "alliance",
+        "region": "eastern-kingdoms",
+        "position": { "x": 6990, "y": 2567 },
+        "connections": ["refugepointe", "chillwindcamp", "ironforge", "aeriepeak"]
+      },
+      {
+        "id": "morganvigil",
+        "name": { "zh": "摩根岗哨", "en": "Morgan's Vigil" },
+        "type": "town",
+        "faction": "alliance",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7758, "y": 5192 },
+        "connections": ["stormwind", "thoriumpoint", "lakeshire", "ironforge"]
+      },
+      {
+        "id": "nethergarde",
+        "name": { "zh": "守望堡", "en": "Nethergarde Keep" },
+        "type": "town",
+        "faction": "alliance",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7995, "y": 6193 },
+        "connections": ["stormwind", "darkshire", "bootybay"]
+      },
+      {
+        "id": "menethil",
+        "name": { "zh": "米奈希尔港", "en": "Menethil Harbor" },
+        "type": "town",
+        "faction": "alliance",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7051, "y": 3617 },
+        "connections": ["ironforge", "theramore", "aeriepeak", "southshore"]
+      },
+      {
+        "id": "thoriumpoint",
+        "name": { "zh": "瑟银哨塔", "en": "Thorium Point" },
+        "type": "town",
+        "faction": "neutral",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7204, "y": 4600 },
+        "connections": ["stormwind", "ironforge", "morganvigil", "flamecrest"]
+      },
+      {
+        "id": "theramore",
+        "name": { "zh": "塞拉摩", "en": "Theramore" },
+        "type": "town",
+        "faction": "alliance",
+        "region": "kalimdor",
+        "position": { "x": 3150, "y": 4984 },
+        "connections": ["menethil", "astranaar", "thalanaar", "feathermoon", "nijelspoint", "cenarionhold"]
+      },
+      {
+        "id": "astranaar",
+        "name": { "zh": "阿斯特兰纳", "en": "Astranaar" },
+        "type": "town",
+        "faction": "alliance",
+        "region": "kalimdor",
+        "position": { "x": 1902, "y": 2996 },
+        "connections": ["theramore", "talrendispoint", "windshearfort", "nijelspoint"]
+      },
+      {
+        "id": "talrendispoint",
+        "name": { "zh": "塔伦迪斯营地", "en": "Talrendis Point" },
+        "type": "town",
+        "faction": "alliance",
+        "region": "kalimdor",
+        "position": { "x": 2972, "y": 3031 },
+        "connections": ["astranaar", "feathermoon", "windshearfort", "nijelspoint"]
+      },
+      {
+        "id": "feathermoon",
+        "name": { "zh": "羽月要塞", "en": "Feathermoon Stronghold" },
+        "type": "town",
+        "faction": "alliance",
+        "region": "kalimdor",
+        "position": { "x": 767, "y": 5222 },
+        "connections": ["talrendispoint", "theramore", "nijelspoint", "thalanaar"]
+      },
+      {
+        "id": "thalanaar",
+        "name": { "zh": "萨兰纳尔", "en": "Thalanaar" },
+        "type": "town",
+        "faction": "alliance",
+        "region": "kalimdor",
+        "position": { "x": 2018, "y": 5184 },
+        "connections": ["theramore", "nijelspoint", "cenarionhold", "feathermoon"]
+      },
+      {
+        "id": "nijelspoint",
+        "name": { "zh": "尼耶尔前哨站", "en": "Nijel's Point" },
+        "type": "town",
+        "faction": "alliance",
+        "region": "kalimdor",
+        "position": { "x": 1389, "y": 3802 },
+        "connections": ["thalanaar", "astranaar", "feathermoon", "talrendispoint"]
+      },
+      {
+        "id": "windshearfort",
+        "name": { "zh": "风剪要塞", "en": "Windshear Fort" },
+        "type": "town",
+        "faction": "alliance",
+        "region": "kalimdor",
+        "position": { "x": 1352, "y": 3031 },
+        "connections": ["astranaar", "talrendispoint", "nijelspoint"]
+      },
+      {
+        "id": "cenarionhold",
+        "name": { "zh": "塞纳里奥要塞", "en": "Cenarion Hold" },
+        "type": "town",
+        "faction": "neutral",
+        "region": "kalimdor",
+        "position": { "x": 1544, "y": 5856 },
+        "connections": ["marshallrefuge", "gadgetzan", "thalanaar", "theramore"]
+      },
+      {
+        "id": "ruttheran",
+        "name": { "zh": "鲁瑟兰村", "en": "Rut'theran Village" },
+        "type": "town",
+        "faction": "alliance",
+        "region": "kalimdor",
+        "position": { "x": 1541, "y": 1227 },
+        "connections": ["auberdine"]
+      },
+      {
+        "id": "auberdine",
+        "name": { "zh": "奥伯丁", "en": "Auberdine" },
+        "type": "town",
+        "faction": "alliance",
+        "region": "kalimdor",
+        "position": { "x": 1649, "y": 1919 },
+        "connections": ["ruttheran", "astranaar"]
+      },
+      {
+        "id": "orgrimmar",
+        "name": { "zh": "奥格瑞玛", "en": "Orgrimmar" },
+        "type": "capital",
+        "faction": "horde",
+        "region": "kalimdor",
+        "position": { "x": 3106, "y": 3387 },
+        "connections": ["thunderbluff", "crossroads", "splintertreepost", "gadgetzan", "ratchet", "brackenwall", "undercity", "gromgol", "hammerfall", "tarrenmill"]
+      },
+      {
+        "id": "thunderbluff",
+        "name": { "zh": "雷霆崖", "en": "Thunder Bluff" },
+        "type": "capital",
+        "faction": "horde",
+        "region": "kalimdor",
+        "position": { "x": 1814, "y": 4222 },
+        "connections": ["orgrimmar", "crossroads", "bravecamp", "campmojache", "freewindpost", "shadowpreyvillage", "sunrockretreat"]
+      },
+      {
+        "id": "crossroads",
+        "name": { "zh": "十字路口", "en": "Crossroads" },
+        "type": "town",
+        "faction": "horde",
+        "region": "kalimdor",
+        "position": { "x": 2586, "y": 3998 },
+        "connections": ["orgrimmar", "thunderbluff", "splintertreepost", "ratchet", "bravecamp"]
+      },
+      {
+        "id": "splintertreepost",
+        "name": { "zh": "碎木岗哨", "en": "Splintertree Post" },
+        "type": "town",
+        "faction": "horde",
+        "region": "kalimdor",
+        "position": { "x": 2580, "y": 3198 },
+        "connections": ["orgrimmar", "crossroads", "bravecamp"]
+      },
+      {
+        "id": "bravecamp",
+        "name": { "zh": "勇敢营地", "en": "Brave Camp" },
+        "type": "town",
+        "faction": "horde",
+        "region": "kalimdor",
+        "position": { "x": 3118, "y": 2777 },
+        "connections": ["thunderbluff", "orgrimmar", "crossroads", "splintertreepost"]
+      },
+      {
+        "id": "campmojache",
+        "name": { "zh": "莫沙彻营地", "en": "Camp Mojache" },
+        "type": "town",
+        "faction": "horde",
+        "region": "kalimdor",
+        "position": { "x": 1724, "y": 5150 },
+        "connections": ["thalanaar", "thunderbluff", "sunrockretreat", "freewindpost", "shadowpreyvillage"]
+      },
+      {
+        "id": "freewindpost",
+        "name": { "zh": "乱风岗", "en": "Freewind Post" },
+        "type": "town",
+        "faction": "horde",
+        "region": "kalimdor",
+        "position": { "x": 2532, "y": 5502 },
+        "connections": ["campmojache", "thunderbluff"]
+      },
+      {
+        "id": "shadowpreyvillage",
+        "name": { "zh": "葬影村", "en": "Shadowprey Village" },
+        "type": "town",
+        "faction": "horde",
+        "region": "kalimdor",
+        "position": { "x": 911, "y": 4315 },
+        "connections": ["thunderbluff", "campmojache", "freewindpost"]
+      },
+      {
+        "id": "sunrockretreat",
+        "name": { "zh": "烈日石居", "en": "Sun Rock Retreat" },
+        "type": "town",
+        "faction": "horde",
+        "region": "kalimdor",
+        "position": { "x": 1469, "y": 3510 },
+        "connections": ["campmojache", "thunderbluff", "freewindpost"]
+      },
+      {
+        "id": "brackenwall",
+        "name": { "zh": "蕨墙村", "en": "Brackenwall Village" },
+        "type": "town",
+        "faction": "horde",
+        "region": "kalimdor",
+        "position": { "x": 2693, "y": 4720 },
+        "connections": ["orgrimmar", "mudsprocket", "ratchet"]
+      },
+      {
+        "id": "mudsprocket",
+        "name": { "zh": "泥链镇", "en": "Mudsprocket" },
+        "type": "town",
+        "faction": "horde",
+        "region": "kalimdor",
+        "position": { "x": 2724, "y": 5132 },
+        "connections": ["brackenwall", "gadgetzan", "campmojache"]
+      },
+      {
+        "id": "undercity",
+        "name": { "zh": "幽暗城", "en": "Undercity" },
+        "type": "capital",
+        "faction": "horde",
+        "region": "eastern-kingdoms",
+        "position": { "x": 6693, "y": 1612 },
+        "connections": ["tarrenmill", "hammerfall", "orgrimmar", "gromgol", "revantuskvillage", "stonard"]
+      },
+      {
+        "id": "gromgol",
+        "name": { "zh": "格罗姆高营地", "en": "Grom'gol Base Camp" },
+        "type": "town",
+        "faction": "horde",
+        "region": "eastern-kingdoms",
+        "position": { "x": 6700, "y": 6664 },
+        "connections": ["bootybay", "orgrimmar", "stonard", "undercity", "kargath"]
+      },
+      {
+        "id": "stonard",
+        "name": { "zh": "斯通纳德", "en": "Stonard" },
+        "type": "town",
+        "faction": "horde",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7941, "y": 5986 },
+        "connections": ["gromgol", "kargath", "undercity"]
+      },
+      {
+        "id": "kargath",
+        "name": { "zh": "卡加斯", "en": "Kargath" },
+        "type": "town",
+        "faction": "horde",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7574, "y": 4598 },
+        "connections": ["stonard", "hammerfall", "gromgol"]
+      },
+      {
+        "id": "hammerfall",
+        "name": { "zh": "落锤镇", "en": "Hammerfall" },
+        "type": "town",
+        "faction": "horde",
+        "region": "eastern-kingdoms",
+        "position": { "x": 8023, "y": 2637 },
+        "connections": ["undercity", "kargath", "tarrenmill", "revantuskvillage", "orgrimmar"]
+      },
+      {
+        "id": "tarrenmill",
+        "name": { "zh": "塔伦米尔", "en": "Tarren Mill" },
+        "type": "town",
+        "faction": "horde",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7200, "y": 2290 },
+        "connections": ["undercity", "hammerfall", "orgrimmar"]
+      },
+      {
+        "id": "revantuskvillage",
+        "name": { "zh": "恶齿村", "en": "Revantusk Village" },
+        "type": "town",
+        "faction": "horde",
+        "region": "eastern-kingdoms",
+        "position": { "x": 8387, "y": 2444 },
+        "connections": ["hammerfall", "orgrimmar", "undercity"]
+      },
+      {
+        "id": "flamecrest",
+        "name": { "zh": "烈焰峰", "en": "Flame Crest" },
+        "type": "town",
+        "faction": "horde",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7265, "y": 5049 },
+        "connections": ["kargath", "thoriumpoint"]
+      },
+      {
+        "id": "gadgetzan",
+        "name": { "zh": "加基森", "en": "Gadgetzan" },
+        "type": "town",
+        "faction": "neutral",
+        "region": "kalimdor",
+        "position": { "x": 2897, "y": 5986 },
+        "connections": ["bootybay", "ratchet", "orgrimmar", "marshallrefuge", "mudsprocket", "cenarionhold", "thalanaar"]
+      },
+      {
+        "id": "bootybay",
+        "name": { "zh": "藏宝海湾", "en": "Booty Bay" },
+        "type": "town",
+        "faction": "neutral",
+        "region": "eastern-kingdoms",
+        "position": { "x": 6540, "y": 7347 },
+        "connections": ["gadgetzan", "stormwind", "ratchet", "gromgol", "nethergarde", "sentinelhill"]
+      },
+      {
+        "id": "ratchet",
+        "name": { "zh": "棘齿城", "en": "Ratchet" },
+        "type": "town",
+        "faction": "neutral",
+        "region": "kalimdor",
+        "position": { "x": 2860, "y": 4132 },
+        "connections": ["bootybay", "gadgetzan", "orgrimmar", "crossroads", "brackenwall"]
+      },
+      {
+        "id": "lightshope",
+        "name": { "zh": "圣光之愿礼拜堂", "en": "Light's Hope Chapel" },
+        "type": "town",
+        "faction": "neutral",
+        "region": "eastern-kingdoms",
+        "position": { "x": 8640, "y": 1381 },
+        "connections": ["chillwindcamp", "undercity", "stormwind", "ironforge", "hammerfall"]
+      },
+      {
+        "id": "marshallrefuge",
+        "name": { "zh": "马绍尔营地", "en": "Marshal's Refuge" },
+        "type": "town",
+        "faction": "neutral",
+        "region": "kalimdor",
+        "position": { "x": 2131, "y": 5696 },
+        "connections": ["gadgetzan", "campmojache", "thunderbluff", "cenarionhold", "freewindpost"]
+      },
+      {
+        "id": "everlook",
+        "name": { "zh": "永望镇", "en": "Everlook" },
+        "type": "town",
+        "faction": "neutral",
+        "region": "kalimdor",
+        "position": { "x": 3196, "y": 1773 },
+        "connections": ["moonglade", "astranaar"]
+      },
+      {
+        "id": "moonglade",
+        "name": { "zh": "月光林地", "en": "Moonglade" },
+        "type": "town",
+        "faction": "neutral",
+        "region": "kalimdor",
+        "position": { "x": 2538, "y": 1632 },
+        "connections": ["everlook"]
+      },
+      {
+        "id": "menethil_ship",
+        "name": { "zh": "米奈希尔港", "en": "Menethil Harbor" },
+        "type": "ship",
+        "faction": "alliance",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7051, "y": 3617 },
+        "connections": ["theramore", "auberdine_ship"],
+        "note": { "zh": "航线：塞拉摩", "en": "Ship: Theramore" }
+      },
+      {
+        "id": "auberdine_ship",
+        "name": { "zh": "奥伯丁", "en": "Auberdine" },
+        "type": "ship",
+        "faction": "alliance",
+        "region": "kalimdor",
+        "position": { "x": 1617, "y": 1887 },
+        "connections": ["menethil_ship", "ruttheran_ship"],
+        "note": { "zh": "航线：暴风城港口 / 鲁瑟兰村", "en": "Ship: Menethil Harbor / Rut'theran" }
+      },
+      {
+        "id": "ruttheran_ship",
+        "name": { "zh": "鲁瑟兰村", "en": "Rut'theran Village" },
+        "type": "ship",
+        "faction": "alliance",
+        "region": "kalimdor",
+        "position": { "x": 1508, "y": 1262 },
+        "connections": ["auberdine_ship"],
+        "note": { "zh": "航线：奥伯丁", "en": "Ship: Auberdine" }
+      },
+      {
+        "id": "bootybay_ship",
+        "name": { "zh": "藏宝海湾", "en": "Booty Bay" },
+        "type": "ship",
+        "faction": "neutral",
+        "region": "eastern-kingdoms",
+        "position": { "x": 6540, "y": 7347 },
+        "connections": ["ratchet_ship"],
+        "note": { "zh": "航线：棘齿城", "en": "Ship: Ratchet" }
+      },
+      {
+        "id": "ratchet_ship",
+        "name": { "zh": "棘齿城", "en": "Ratchet" },
+        "type": "ship",
+        "faction": "neutral",
+        "region": "kalimdor",
+        "position": { "x": 2915, "y": 4152 },
+        "connections": ["bootybay_ship"],
+        "note": { "zh": "航线：藏宝海湾", "en": "Ship: Booty Bay" }
+      },
+      {
+        "id": "orgrimmar_zeppelin",
+        "name": { "zh": "奥格瑞玛飞艇塔", "en": "Orgrimmar Zeppelin Tower" },
+        "type": "zeppelin",
+        "faction": "horde",
+        "region": "kalimdor",
+        "position": { "x": 3187, "y": 3436 },
+        "connections": ["undercity_zeppelin", "gromgol_zeppelin"],
+        "note": { "zh": "飞艇：幽暗城 / 格罗姆高", "en": "Zeppelin: Undercity / Grom'gol" }
+      },
+      {
+        "id": "undercity_zeppelin",
+        "name": { "zh": "幽暗城飞艇塔", "en": "Undercity Zeppelin Tower" },
+        "type": "zeppelin",
+        "faction": "horde",
+        "region": "eastern-kingdoms",
+        "position": { "x": 6693, "y": 1612 },
+        "connections": ["orgrimmar_zeppelin"],
+        "note": { "zh": "飞艇：奥格瑞玛", "en": "Zeppelin: Orgrimmar" }
+      },
+      {
+        "id": "gromgol_zeppelin",
+        "name": { "zh": "格罗姆高飞艇塔", "en": "Grom'gol Zeppelin Tower" },
+        "type": "zeppelin",
+        "faction": "horde",
+        "region": "eastern-kingdoms",
+        "position": { "x": 6700, "y": 6664 },
+        "connections": ["orgrimmar_zeppelin"],
+        "note": { "zh": "飞艇：奥格瑞玛", "en": "Zeppelin: Orgrimmar" }
+      },
+      {
+        "id": "stormwind_tram",
+        "name": { "zh": "暴风城地铁", "en": "Stormwind Tram" },
+        "type": "special",
+        "faction": "alliance",
+        "region": "eastern-kingdoms",
+        "position": { "x": 6480, "y": 5250 },
+        "connections": ["ironforge_tram"],
+        "note": { "zh": "地铁：矮人区", "en": "Tram: Dwarven District" }
+      },
+      {
+        "id": "ironforge_tram",
+        "name": { "zh": "铁炉堡地铁", "en": "Ironforge Tram" },
+        "type": "special",
+        "faction": "alliance",
+        "region": "eastern-kingdoms",
+        "position": { "x": 6950, "y": 4050 },
+        "connections": ["stormwind_tram"],
+        "note": { "zh": "地铁：工匠区", "en": "Tram: Tinker Town" }
+      }
+    ],
+    "dungeons": [
+      {
+        "id": "deadmines",
+        "name": { "zh": "死亡矿井", "en": "Deadmines" },
+        "type": "dungeon",
+        "level": "15-20",
+        "region": "eastern-kingdoms",
+        "position": { "x": 6171, "y": 6169 }
+      },
+      {
+        "id": "wailingcaverns",
+        "name": { "zh": "哀嚎洞穴", "en": "Wailing Caverns" },
+        "type": "dungeon",
+        "level": "15-25",
+        "region": "kalimdor",
+        "position": { "x": 2402, "y": 4011 }
+      },
+      {
+        "id": "shadowfangkeep",
+        "name": { "zh": "影牙城堡", "en": "Shadowfang Keep" },
+        "type": "dungeon",
+        "level": "18-25",
+        "region": "eastern-kingdoms",
+        "position": { "x": 6850, "y": 2150 }
+      },
+      {
+        "id": "blackfathomdeeps",
+        "name": { "zh": "黑暗深渊", "en": "Blackfathom Deeps" },
+        "type": "dungeon",
+        "level": "20-27",
+        "region": "kalimdor",
+        "position": { "x": 1581, "y": 2616 }
+      },
+      {
+        "id": "stockades",
+        "name": { "zh": "监狱", "en": "The Stockade" },
+        "type": "dungeon",
+        "level": "22-30",
+        "region": "eastern-kingdoms",
+        "position": { "x": 6582, "y": 5313 }
+      },
+      {
+        "id": "gnomeregan",
+        "name": { "zh": "诺莫瑞根", "en": "Gnomeregan" },
+        "type": "dungeon",
+        "level": "24-32",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7200, "y": 4100 }
+      },
+      {
+        "id": "razorfenkraul",
+        "name": { "zh": "剃刀沼泽", "en": "Razorfen Kraul" },
+        "type": "dungeon",
+        "level": "25-35",
+        "region": "kalimdor",
+        "position": { "x": 2900, "y": 4500 }
+      },
+      {
+        "id": "scarlethonnastery",
+        "name": { "zh": "血色修道院", "en": "Scarlet Monastery" },
+        "type": "dungeon",
+        "level": "30-40",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7800, "y": 1800 }
+      },
+      {
+        "id": "razorfendowns",
+        "name": { "zh": "剃刀高地", "en": "Razorfen Downs" },
+        "type": "dungeon",
+        "level": "35-40",
+        "region": "kalimdor",
+        "position": { "x": 2950, "y": 4300 }
+      },
+      {
+        "id": "uldaman",
+        "name": { "zh": "奥达曼", "en": "Uldaman" },
+        "type": "dungeon",
+        "level": "35-45",
+        "region": "eastern-kingdoms",
+        "position": { "x": 8200, "y": 4200 }
+      },
+      {
+        "id": "zulfarrak",
+        "name": { "zh": "祖尔法拉克", "en": "Zul'Farrak" },
+        "type": "dungeon",
+        "level": "42-46",
+        "region": "kalimdor",
+        "position": { "x": 2800, "y": 5800 }
+      },
+      {
+        "id": "maraudon",
+        "name": { "zh": "玛拉顿", "en": "Maraudon" },
+        "type": "dungeon",
+        "level": "43-49",
+        "region": "kalimdor",
+        "position": { "x": 1500, "y": 4800 }
+      },
+      {
+        "id": "sunkentemple",
+        "name": { "zh": "沉没的神庙", "en": "Sunken Temple" },
+        "type": "dungeon",
+        "level": "44-50",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7500, "y": 5500 }
+      },
+      {
+        "id": "blackrockspire",
+        "name": { "zh": "黑石塔", "en": "Blackrock Spire" },
+        "type": "dungeon",
+        "level": "55-60",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7600, "y": 4800 }
+      },
+      {
+        "id": "scholomance",
+        "name": { "zh": "通灵学院", "en": "Scholomance" },
+        "type": "dungeon",
+        "level": "56-60",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7100, "y": 1900 }
+      },
+      {
+        "id": "stratholme",
+        "name": { "zh": "斯坦索姆", "en": "Stratholme" },
+        "type": "dungeon",
+        "level": "56-60",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7800, "y": 1600 }
+      },
+      {
+        "id": "diremaul",
+        "name": { "zh": "厄运之槌", "en": "Dire Maul" },
+        "type": "dungeon",
+        "level": "55-60",
+        "region": "kalimdor",
+        "position": { "x": 2800, "y": 3200 }
+      },
+      {
+        "id": "blackwinglair",
+        "name": { "zh": "黑翼之巢", "en": "Blackwing Lair" },
+        "type": "dungeon",
+        "level": "60",
+        "region": "eastern-kingdoms",
+        "position": { "x": 7600, "y": 4800 }
+      }
+    ]
+  },
+  "regions": {
+    "eastern-kingdoms": {
+      "name": { "zh": "东部王国", "en": "Eastern Kingdoms" },
+      "bounds": { "x": 4720, "y": 0, "width": 4720, "height": 7928 },
+      "image": "/images/maps/regions/fullmap.webp",
+      "canvasSize": { "width": 4720, "height": 7928 }
+    },
+    "kalimdor": {
+      "name": { "zh": "卡利姆多", "en": "Kalimdor" },
+      "bounds": { "x": 0, "y": 0, "width": 4720, "height": 7928 },
+      "image": "/images/maps/regions/fullmap.webp",
+      "canvasSize": { "width": 4720, "height": 7928 }
+    },
+    "theramore": {
+      "name": { "zh": "塞拉摩", "en": "Theramore" },
+      "bounds": { "x": 2447, "y": 4475, "width": 946, "height": 970 },
+      "image": "/images/maps/regions/theramore.webp",
+      "canvasSize": { "width": 3072, "height": 3072 }
+    },
+    "stonetalon": {
+      "name": { "zh": "石爪山脉", "en": "Stonetalon Mountains" },
+      "bounds": { "x": 836, "y": 2716, "width": 1427, "height": 1289 },
+      "image": "/images/maps/regions/fullmap.webp",
+      "canvasSize": { "width": 3072, "height": 3072 }
+    },
+    "stranglethorn": {
+      "name": { "zh": "荆棘谷", "en": "Stranglethorn Vale" },
+      "bounds": { "x": 5500, "y": 6000, "width": 1800, "height": 1800 },
+      "image": "/images/maps/regions/fullmap.webp",
+      "canvasSize": { "width": 3072, "height": 3072 }
+    },
+    "badlands": {
+      "name": { "zh": "荒芜之地", "en": "Badlands" },
+      "bounds": { "x": 7200, "y": 4200, "width": 1200, "height": 1200 },
+      "image": "/images/maps/regions/badlands.webp",
+      "canvasSize": { "width": 3072, "height": 3072 }
+    }
+  },
+  "config": {
+    "fullMapSize": { "width": 9440, "height": 7928 },
+    "pointTypes": {
+      "flightMaster": { "name": { "zh": "飞行管理员", "en": "Flight Master" }, "color": "#4CAF50", "size": 20 },
+      "capital": { "name": { "zh": "主城", "en": "Capital" }, "color": "#FF5722", "size": 24 },
+      "town": { "name": { "zh": "城镇", "en": "Town" }, "color": "#2196F3", "size": 18 },
+      "dungeon": { "name": { "zh": "副本", "en": "Dungeon" }, "color": "#9C27B0", "size": 16 },
+      "ship": { "name": { "zh": "港口航线", "en": "Ship Route" }, "color": "#00BCD4", "size": 22 },
+      "zeppelin": { "name": { "zh": "飞艇航线", "en": "Zeppelin Route" }, "color": "#FF9800", "size": 22 },
+      "special": { "name": { "zh": "特殊交通", "en": "Special Transport" }, "color": "#795548", "size": 22 }
+    },
+    "factions": {
+      "alliance": { "name": { "zh": "联盟", "en": "Alliance" }, "color": "#0078FF" },
+      "horde": { "name": { "zh": "部落", "en": "Horde" }, "color": "#E10B00" },
+      "neutral": { "name": { "zh": "中立", "en": "Neutral" }, "color": "#FFD700" }
+    }
+  }
+}
