@@ -23,11 +23,12 @@ export default {
     plugins: [LocalSearchPlugin()]
   },
   themeConfig: {
-    logo: "/logo.svg",
-    siteTitle: '魔兽世界地图库',
+    logo: "/nav.webp",
+    siteTitle: '魔兽世界地图编辑工具库',
     nav: [
       { text: '首页', link: '/' },
       { text: '地图查看', link: 'docs/map' },
+      { text: '演示查看', link: 'images/demo/demo.webp' },
       { text: '项目源码', link: 'https://github.com/hestiacn/wow-map' }
     ],
     socialLinks: [
@@ -100,8 +101,8 @@ export default {
       text: '在 GitHub 上编辑此页面',
     },
     footer: {
-      message: '基于 <a href="https://leafletjs.com/" target="_blank">Leaflet</a> 和 <a href="https://vitepress.dev/" target="_blank">VitePress</a> 构建',
-      copyright: '版权所有 © 2024-' + new Date().getFullYear() + ' 魔兽世界地图库 | 游戏数据: <a href="https://blizzard.com" target="_blank">Blizzard Entertainment</a>'
+      message: '基于 HTML5 <a href="https://developer.mozilla.org/docs/Web/API/Canvas_API " target="_blank">Canvas API</a> 与<a href="https://vitepress.dev/ " target="_blank">VitePress框架构建</a>',
+      copyright: '版权所有 © 2024-' + new Date().getFullYear() + ' 魔兽世界地图库 | 游戏数据归属: <a href="https://blizzard.com " target="_blank">Blizzard Entertainment</a>'
     },
     sidebarMenuLabel: '功能目录',
     darkModeSwitchLabel: '主题切换',
@@ -111,7 +112,7 @@ export default {
       formatOptions: {
         dateStyle: 'full',
         timeStyle: 'medium',
-        timeZone: 'Asia/Shanghai' // 改为北京时间
+        timeZone: 'Asia/Shanghai'
       },
     },
     docFooter: {

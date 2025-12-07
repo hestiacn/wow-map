@@ -277,7 +277,8 @@
               <option value="town">城镇</option>
               <option value="capital">主城</option>
               <option value="flightMaster">飞行点</option>
-              <option value="dungeon">副本</option>
+              <option value="dungeon">5人副本</option>
+              <option value="raid">团队副本</option>
               <option value="ship">港口航线</option>
               <option value="zeppelin">飞艇航线</option>
               <option value="special">特殊交通</option>
@@ -350,7 +351,7 @@
           </div>
           
           <!-- 阵营选择（区域文本标注和交通点不需要阵营） -->
-          <div class="form-group" v-if="newPoint.type !== 'regionText' && newPoint.type !== 'ship' && newPoint.type !== 'zeppelin' && newPoint.type !== 'special'">
+          <div class="form-group" v-if="newPoint.type !== 'regionText' && newPoint.type !== 'ship' && newPoint.type !== 'zeppelin' && newPoint.type !== 'special' && newPoint.type !== 'raid' && newPoint.type !== 'dungeon'">
             <label>阵营:</label>
             <select v-model="newPoint.faction">
               <option value="alliance">联盟</option>
@@ -359,9 +360,9 @@
             </select>
           </div>
           
-          <div class="form-group" v-if="newPoint.type === 'dungeon'">
+          <div class="form-group" v-if="newPoint.type === 'dungeon' || newPoint.type === 'raid'">
             <label>等级:</label>
-            <input v-model="newPoint.level" placeholder="例如: 15-20">
+            <input v-model="newPoint.level" placeholder="例如: 15-20 或 60(团队)">
           </div>
           
           <!-- 交通点说明 -->
@@ -604,8 +605,29 @@
             <h4>标记点类型</h4>
             <div class="icon-list">
               <div class="icon-item">
-                <span class="icon">🏰</span>
-                <span><strong>主城</strong> - 主要阵营城市</span>
+                <img :src="iconImages.dungeon ? iconImages.dungeon.src : ''" alt="5人副本" class="icon-img" v-if="iconImages.dungeon">
+                <span v-else class="icon">⚔️</span>
+                <span><strong>5人副本</strong> - 5人地下城</span>
+              </div>
+              <div class="icon-item">
+                <img :src="iconImages.raid ? iconImages.raid.src : ''" alt="团队副本" class="icon-img" v-if="iconImages.raid">
+                <span v-else class="icon">🏰</span>
+                <span><strong>团队副本</strong> - 团队地下城</span>
+              </div>
+              <div class="icon-item">
+                <img :src="iconImages.ship ? iconImages.ship.src : ''" alt="联盟船坞" class="icon-img" v-if="iconImages.ship">
+                <span v-else class="icon">🚢</span>
+                <span><strong>港口航线</strong> - 轮船交通路线</span>
+              </div>
+              <div class="icon-item">
+                <img :src="iconImages.zeppelin ? iconImages.zeppelin.src : ''" alt="部落飞艇" class="icon-img" v-if="iconImages.zeppelin">
+                <span v-else class="icon">🚁</span>
+                <span><strong>飞艇航线</strong> - 飞艇交通路线</span>
+              </div>
+              <div class="icon-item">
+                <img :src="iconImages.special ? iconImages.special.src : ''" alt="地铁" class="icon-img" v-if="iconImages.special">
+                <span v-else class="icon">🚇</span>
+                <span><strong>特殊交通</strong> - 地铁等特殊路线</span>
               </div>
               <div class="icon-item">
                 <span class="icon">🏠</span>
@@ -614,22 +636,6 @@
               <div class="icon-item">
                 <span class="icon">✈️</span>
                 <span><strong>飞行点</strong> - 飞行管理员位置</span>
-              </div>
-              <div class="icon-item">
-                <span class="icon">⚔️</span>
-                <span><strong>副本</strong> - 地下城和团队副本</span>
-              </div>
-              <div class="icon-item">
-                <span class="icon">🚢</span>
-                <span><strong>港口航线</strong> - 轮船交通路线</span>
-              </div>
-              <div class="icon-item">
-                <span class="icon">🚁</span>
-                <span><strong>飞艇航线</strong> - 飞艇交通路线</span>
-              </div>
-              <div class="icon-item">
-                <span class="icon">🚇</span>
-                <span><strong>特殊交通</strong> - 地铁等特殊路线</span>
               </div>
               <div class="icon-item">
                 <span class="icon">📝</span>
@@ -653,7 +659,7 @@
           <div class="help-section">
             <h4>数据保存说明</h4>
             <ul>
-              <li><strong>主城、城镇、飞行点、副本、交通系统</strong>: 保存到 <code>map-data.json</code></li>
+              <li><strong>主城、城镇、飞行点、5人副本、团队副本、交通系统</strong>: 保存到 <code>map-data.json</code></li>
               <li><strong>区域名称标注</strong>: 保存到 <code>region-subnames.json</code></li>
               <li><strong>区域地图块</strong>: 保存到 <code>map-data.json</code> 的 regions 部分</li>
             </ul>
@@ -706,6 +712,19 @@ export default {
       currentWorldCoords: { x: 0, y: 0 },
       regionAdjustmentStage: false,
       showRegionAdjustmentControls: false,
+      
+      // 图标图片定义
+      iconImages: {
+        zeppelin: null,  // 部落飞艇
+        ship: null,      // 联盟船坞
+        special: null,   // 地铁
+        dungeon: null,   // 5人副本
+        raid: null       // 团队副本
+      },
+      iconsLoaded: false,
+      
+      // 固定图标大小
+      iconSize: 32,
       
       // 视图控制状态
       viewport: {
@@ -869,6 +888,7 @@ export default {
     this.initCanvas();
     this.loadMap();
     this.setupEventListeners();
+    await this.loadIcons(); // 加载图标图片
   },
   beforeUnmount() {
     this.removeEventListeners();
@@ -1369,6 +1389,53 @@ export default {
       };
     },
     
+    // 预加载图标图片
+    async loadIcons() {
+      const iconPaths = {
+        zeppelin: '/images/map-icons/zeppelin.webp',
+        ship: '/images/map-icons/ship.webp',
+        special: '/images/map-icons/special.webp',
+        dungeon: '/images/map-icons/dungeon.webp',
+        raid: '/images/map-icons/raid.webp'
+      };
+      
+      const loadPromises = Object.entries(iconPaths).map(([key, path]) => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => {
+            this.iconImages[key] = img;
+            resolve();
+          };
+          img.onerror = () => {
+            console.warn(`Failed to load icon: ${path}`);
+            resolve(); // 即使加载失败也继续
+          };
+          img.src = path;
+        });
+      });
+      
+      await Promise.all(loadPromises);
+      this.iconsLoaded = true;
+      console.log('图标加载完成');
+      
+      // 图标加载完成后重绘地图
+      this.drawMap();
+    },
+    
+    // 检查是否应该使用图片图标
+    shouldUseIcon(point) {
+      const iconTypes = ['zeppelin', 'ship', 'special', 'dungeon', 'raid'];
+      return iconTypes.includes(point.type) && this.iconsLoaded && this.iconImages[point.type];
+    },
+    
+    // 获取图标图片
+    getIconImage(point) {
+      if (this.shouldUseIcon(point)) {
+        return this.iconImages[point.type];
+      }
+      return null;
+    },
+    
     async loadMapData() {
       try {
         // 加载主地图数据
@@ -1575,6 +1642,7 @@ export default {
       this.mergeRegionSubnames();
       this.drawMap();
     },
+    
     initCanvas() {
       this.canvas = this.$refs.mapCanvas;
       this.ctx = this.canvas.getContext('2d');
@@ -1685,31 +1753,22 @@ export default {
     },
 
     drawRegionMapTiles() {
-      if (this.exportInProgress) return;
       if (!this.mapData?.regions) return;
       
       Object.entries(this.mapData.regions).forEach(([id, region]) => {
-        // 跳过东部王国和卡利姆多这两个基础区域
         if (id === 'eastern-kingdoms' || id === 'kalimdor') return;
-        
-        // 检查图片是否已缓存
         if (!this.regionImageCache[id]) {
-          // 如果未缓存，创建新的 Image 对象并缓存
           this.regionImageCache[id] = new Image();
           this.regionImageCache[id].onload = () => {
-            // 图片加载完成后重绘
             this.drawMap();
           };
           this.regionImageCache[id].onerror = () => {
             console.warn(`无法加载区域图片: ${region.image}`);
-            // 从缓存中移除损坏的图片
             delete this.regionImageCache[id];
           };
           this.regionImageCache[id].src = region.image;
-          return; // 第一次加载时先返回，等加载完成后再绘制
+          return;
         }
-        
-        // 如果图片已加载，直接绘制
         if (this.regionImageCache[id].complete && this.regionImageCache[id].naturalWidth !== 0) {
           try {
             this.ctx.globalAlpha = 0.8;
@@ -1723,7 +1782,6 @@ export default {
             this.ctx.globalAlpha = 1.0;
           } catch (error) {
             console.warn(`绘制区域图片失败: ${region.image}`, error);
-            // 从缓存中移除损坏的图片
             delete this.regionImageCache[id];
           }
         }
@@ -1895,6 +1953,36 @@ export default {
       }
     },
 
+    // 绘制图标图片
+    drawIconImage(point, x, y, iconImage, isHover = false) {
+      if (!iconImage || !iconImage.complete) return;
+      
+      // 固定图标大小：32x32像素（在世界坐标系中，不随缩放变化）
+      const baseSize = this.iconSize;
+      const size = isHover ? baseSize * 1.2 : baseSize; // 悬停时稍微放大
+      
+      // 计算绘制位置（居中）
+      const drawX = x - size / 2;
+      const drawY = y - size / 2;
+      
+      // 保存上下文状态
+      this.ctx.save();
+      
+      // 悬停时添加发光效果
+      if (isHover) {
+        this.ctx.shadowColor = '#FFFF00';
+        this.ctx.shadowBlur = 10;
+        this.ctx.shadowOffsetX = 0;
+        this.ctx.shadowOffsetY = 0;
+      }
+      
+      // 绘制图标
+      this.ctx.drawImage(iconImage, drawX, drawY, size, size);
+      
+      // 恢复上下文状态
+      this.ctx.restore();
+    },
+    // 更新 drawPoint 方法
     drawPoint(point, isHover = false) {
       // 区域文本标注不显示标记点，只显示文本
       if (point.type === 'regionText') {
@@ -1920,86 +2008,57 @@ export default {
         worldY = regionY;
       }
       
-      const typeConfig = this.mapData?.config?.pointTypes[point.type] || { size: 18, color: '#2196F3' };
+      // 检查是否为需要显示图标的类型
+      const iconTypes = ['ship', 'zeppelin', 'special', 'dungeon', 'raid'];
       
-      // 修复阵营颜色配置
-      let factionColor;
-      switch(point.faction) {
-        case 'alliance':
-          factionColor = '#0078FF'; // 联盟蓝色
-          break;
-        case 'horde':
-          factionColor = '#E10B00'; // 部落红色
-          break;
-        case 'neutral':
-          factionColor = '#FFD700'; // 中立金色
-          break;
-      }
-      
-      // 使用固定大小，不随缩放变化
-      const baseSize = typeConfig.size || 18;
-      // 固定大小，只在悬停时稍微放大
-      const fixedSize = isHover ? baseSize * 1.2 : baseSize;
-      
-      // 绘制标记点 - 使用阵营颜色而不是类型颜色
-      this.ctx.fillStyle = factionColor;
-      this.ctx.beginPath();
-      
-      // 为交通点使用特殊形状
-      if (point.type === 'ship') {
-        // 轮船：船形
-        this.drawShipIcon(worldX, worldY, fixedSize);
-      } else if (point.type === 'zeppelin') {
-        // 飞艇：飞艇形状
-        this.drawZeppelinIcon(worldX, worldY, fixedSize);
-      } else if (point.type === 'special') {
-        // 特殊交通：地铁形状
-        this.drawSpecialTransportIcon(worldX, worldY, fixedSize);
+      if (iconTypes.includes(point.type) && this.iconsLoaded && this.iconImages[point.type]) {
+        // 使用图片图标（固定大小）
+        this.drawIconImage(point, worldX, worldY, this.iconImages[point.type], isHover);
+        
+        // 绘制标签 - 只在缩放较大时显示
+        if (this.viewport.scale > 0.5) {
+          const labelOffset = this.iconSize + 5; // 固定偏移量
+          this.drawPointLabel(point, worldX, worldY, labelOffset, isHover);
+        }
       } else {
-        // 普通点：圆形 - 使用固定大小
-        this.ctx.arc(worldX, worldY, fixedSize, 0, 2 * Math.PI);
-      }
-      
-      this.ctx.fill();
-      
-      this.ctx.strokeStyle = isHover ? '#FFFF00' : '#FFFFFF';
-      this.ctx.lineWidth = isHover ? 3 : 2; // 固定描边宽度
-      this.ctx.stroke();
-      
-      // 绘制标签 - 只在缩放较大时显示
-      if (this.viewport.scale > 0.5) {
-        this.drawPointLabel(point, worldX, worldY, fixedSize, isHover);
-      }
+            // 使用原来的圆形标记方式
+            const typeConfig = this.mapData?.config?.pointTypes[point.type] || { size: 18, color: '#2196F3' };
+            
+            // 修复阵营颜色配置
+            let factionColor;
+            switch(point.faction) {
+            case 'alliance':
+                factionColor = '#0078FF'; // 联盟蓝色
+                break;
+            case 'horde':
+                factionColor = '#E10B00'; // 部落红色
+                break;
+            case 'neutral':
+                factionColor = '#FFD700'; // 中立金色
+                break;
+            }
+            
+            // 使用固定大小，不随缩放变化
+            const baseSize = typeConfig.size || 18;
+            const fixedSize = isHover ? baseSize * 1.2 : baseSize;
+            
+            // 绘制圆形标记
+            this.ctx.fillStyle = factionColor;
+            this.ctx.beginPath();
+            this.ctx.arc(worldX, worldY, fixedSize, 0, 2 * Math.PI);
+            this.ctx.fill();
+            
+            this.ctx.strokeStyle = isHover ? '#FFFF00' : '#FFFFFF';
+            this.ctx.lineWidth = isHover ? 3 : 2;
+            this.ctx.stroke();
+            
+            // 绘制标签 - 只在缩放较大时显示
+            if (this.viewport.scale > 0.5) {
+            this.drawPointLabel(point, worldX, worldY, fixedSize, isHover);
+            }
+        }
     },
-
-    // 绘制轮船图标（固定大小）
-    drawShipIcon(x, y, size) {
-      this.ctx.beginPath();
-      // 简化的船体（三角形）
-      this.ctx.moveTo(x - size, y + size/3);
-      this.ctx.lineTo(x + size, y + size/3);
-      this.ctx.lineTo(x, y - size);
-      this.ctx.closePath();
-    },
-
-    // 绘制飞艇图标（固定大小）
-    drawZeppelinIcon(x, y, size) {
-      this.ctx.beginPath();
-      // 简化的飞艇主体（椭圆）
-      this.ctx.ellipse(x, y, size*1.2, size*0.8, 0, 0, 2 * Math.PI);
-      
-      // 简化的吊舱
-      this.ctx.rect(x - size/3, y + size*0.6, size*0.7, size/4);
-    },
-
-    // 绘制特殊交通图标（固定大小）
-    drawSpecialTransportIcon(x, y, size) {
-      this.ctx.beginPath();
-      // 简化的地铁：矩形
-      this.ctx.rect(x - size*0.8, y - size/3, size*1.6, size*0.7);
-    },
-
-    drawPointLabel(point, x, y, size, isHover) {
+    drawPointLabel(point, x, y, offset, isHover) {
       this.ctx.fillStyle = '#FFFFFF';
       // 使用固定字体大小，不随缩放变化
       this.ctx.font = `bold 14px Arial`;
@@ -2012,13 +2071,13 @@ export default {
       this.ctx.fillStyle = isHover ? 'rgba(255, 255, 0, 0.8)' : 'rgba(0, 0, 0, 0.7)';
       this.ctx.fillRect(
         x - textWidth / 2 - 6,
-        y - size - 25,
+        y - offset - 5,
         textWidth + 12,
         20
       );
       
       this.ctx.fillStyle = isHover ? '#000000' : '#FFFFFF';
-      this.ctx.fillText(text, x, y - size - 10);
+      this.ctx.fillText(text, x, y - offset + 10);
       
       // 为交通点添加额外说明
       if (point.note) {
@@ -2028,40 +2087,42 @@ export default {
           this.ctx.fillStyle = isHover ? 'rgba(255, 255, 0, 0.8)' : 'rgba(0, 0, 0, 0.6)';
           this.ctx.fillRect(
             x - textWidth / 2 - 6,
-            y - size - 45,
+            y - offset - 25,
             textWidth + 12,
             16
           );
           this.ctx.fillStyle = isHover ? '#000000' : '#FFFFFF';
-          this.ctx.fillText(noteText, x, y - size - 35);
+          this.ctx.fillText(noteText, x, y - offset - 15);
         }
       }
     },
     
     drawFlightPaths() {
-      // 绘制普通飞行路线
-      if (this.showFlightPaths) {
+    if (this.showFlightPaths) {
+        const drawnConnections = new Set();
+        
         const flightPoints = this.flightMasterPoints.filter(point => 
-          point.connections && point.connections.length > 0
+        point.connections && point.connections.length > 0
         );
         
         flightPoints.forEach(point => {
-          const connectedPoints = RegionUtils.getConnectedPoints(point, this.flightMasterPoints);
-          connectedPoints.forEach(targetPoint => {
-            // 确保目标点也在当前显示的点中，并且在同一地图区域
+        const connectedPoints = RegionUtils.getConnectedPoints(point, this.flightMasterPoints);
+        connectedPoints.forEach(targetPoint => {
             if (this.currentPoints.some(p => p.id === targetPoint.id) && 
                 this.isSameRegion(point, targetPoint)) {
-              // 传递两个点的信息以确定连接线颜色
-              this.drawConnection(point, targetPoint, 'flight');
+            const connectionKey = [point.id, targetPoint.id].sort().join('-');
+            
+            if (!drawnConnections.has(connectionKey)) {
+                this.drawConnection(point, targetPoint, 'flight');
+                drawnConnections.add(connectionKey);
             }
-          });
+            }
         });
-      }
-      
-      // 绘制交通路线（轮船、飞艇、地铁）
-      if (this.showTransport && this.showTransportRoutes) {
+        });
+    }
+    if (this.showTransport && this.showTransportRoutes) {
         this.drawTransportRoutes();
-      }
+        }
     },
 
     // 新增：检查两个点是否在同一地图区域
@@ -2257,47 +2318,45 @@ export default {
       return styles[type] || styles.flight;
     },
 
-    drawConnection(pointA, pointB, connectionType = 'flight') {
-      let coordsA, coordsB;
-      
-      if (this.currentRegion === 'full') {
-        coordsA = { x: pointA.position.x, y: pointA.position.y };
-        coordsB = { x: pointB.position.x, y: pointB.position.y };
-      } else {
-        const region = this.mapData?.regions[this.currentRegion];
-        if (!region || pointA.region !== this.currentRegion || pointB.region !== this.currentRegion) {
-          return;
-        }
-        
-        coordsA = {
-          x: ((pointA.position.x - region.bounds.x) / region.bounds.width) * this.canvas.width,
-          y: ((pointA.position.y - region.bounds.y) / region.bounds.height) * this.canvas.height
-        };
-        
-        coordsB = {
-          x: ((pointB.position.x - region.bounds.x) / region.bounds.width) * this.canvas.width,
-          y: ((pointB.position.y - region.bounds.y) / region.bounds.height) * this.canvas.height
-        };
-      }
-      
-      // 检查是否在同一区域（防止跨大陆连接）
-      if (!this.isSameRegion(pointA, pointB)) {
+  drawConnection(pointA, pointB, connectionType = 'flight') {
+    let coordsA, coordsB;
+    
+    if (this.currentRegion === 'full') {
+      coordsA = { x: pointA.position.x, y: pointA.position.y };
+      coordsB = { x: pointB.position.x, y: pointB.position.y };
+    } else {
+      const region = this.mapData?.regions[this.currentRegion];
+      if (!region || pointA.region !== this.currentRegion || pointB.region !== this.currentRegion) {
         return;
       }
       
-      // 根据连接类型确定样式（传递阵营信息用于飞行路线）
-      let lineStyle = this.getConnectionStyle(connectionType, pointA, pointB);
+      coordsA = {
+        x: ((pointA.position.x - region.bounds.x) / region.bounds.width) * this.canvas.width,
+        y: ((pointA.position.y - region.bounds.y) / region.bounds.height) * this.canvas.height
+      };
       
-      this.ctx.strokeStyle = lineStyle.color;
-      this.ctx.lineWidth = lineStyle.width; // 直接使用固定宽度
-      this.ctx.setLineDash(lineStyle.dash);
-      this.ctx.lineCap = 'round';
-      this.ctx.beginPath();
-      this.ctx.moveTo(coordsA.x, coordsA.y);
-      this.ctx.lineTo(coordsB.x, coordsB.y);
-      this.ctx.stroke();
-      this.ctx.setLineDash([]);
-    },
+      coordsB = {
+        x: ((pointB.position.x - region.bounds.x) / region.bounds.width) * this.canvas.width,
+        y: ((pointB.position.y - region.bounds.y) / region.bounds.height) * this.canvas.height
+      };
+    }
+    if (!this.isSameRegion(pointA, pointB)) {
+      return;
+    }
+    let lineStyle = this.getConnectionStyle(connectionType, pointA, pointB);
+    const fixedLineWidth = lineStyle.width;
+    this.ctx.strokeStyle = lineStyle.color;
+    this.ctx.lineWidth = fixedLineWidth / this.viewport.scale; // 反缩放，保持固定像素宽度
+    this.ctx.lineCap = 'round';
+    const dashPattern = lineStyle.dash || [15, 15];
+    const scaledDash = dashPattern.map(d => d / this.viewport.scale);
+    this.ctx.setLineDash(scaledDash);
+    this.ctx.beginPath();
+    this.ctx.moveTo(coordsA.x, coordsA.y);
+    this.ctx.lineTo(coordsB.x, coordsB.y);
+    this.ctx.stroke();
+    this.ctx.setLineDash([]);
+  },
 
     // 获取连接样式
     getConnectionStyle(connectionType, pointA = null, pointB = null) {
@@ -2360,50 +2419,6 @@ export default {
         width: 4,
         dash: [15, 15]
       };
-    },
-
-    drawConnection(pointA, pointB) {
-      let coordsA, coordsB;
-      
-      if (this.currentRegion === 'full') {
-        coordsA = { x: pointA.position.x, y: pointA.position.y };
-        coordsB = { x: pointB.position.x, y: pointB.position.y };
-      } else {
-        const region = this.mapData?.regions[this.currentRegion];
-        if (!region || pointA.region !== this.currentRegion || pointB.region !== this.currentRegion) {
-          return;
-        }
-        
-        coordsA = {
-          x: ((pointA.position.x - region.bounds.x) / region.bounds.width) * this.canvas.width,
-          y: ((pointA.position.y - region.bounds.y) / region.bounds.height) * this.canvas.height
-        };
-        
-        coordsB = {
-          x: ((pointB.position.x - region.bounds.x) / region.bounds.width) * this.canvas.width,
-          y: ((pointB.position.y - region.bounds.y) / region.bounds.height) * this.canvas.height
-        };
-      }
-      
-      // 根据阵营确定连线颜色
-      let connectionColor = '#FFD700'; // 中立金色
-      
-      if (pointA.faction === 'alliance' && pointB.faction === 'alliance') {
-        connectionColor = '#0078FF'; // 联盟蓝
-      } else if (pointA.faction === 'horde' && pointB.faction === 'horde') {
-        connectionColor = '#E10B00'; // 部落红
-      }
-      // 中立情况使用默认的金色
-      
-      this.ctx.strokeStyle = connectionColor;
-      this.ctx.lineWidth = Math.max(2, 4 / this.viewport.scale);
-      this.ctx.setLineDash([15, 15]);
-      this.ctx.lineCap = 'round';
-      this.ctx.beginPath();
-      this.ctx.moveTo(coordsA.x, coordsA.y);
-      this.ctx.lineTo(coordsB.x, coordsB.y);
-      this.ctx.stroke();
-      this.ctx.setLineDash([]);
     },
 
     handleMapClick(event) {
@@ -2617,7 +2632,7 @@ export default {
             this.handleRegionTextExport(newPoint);
           }
           
-          if (newPoint.type === 'dungeon') {
+          if (newPoint.type === 'dungeon' || newPoint.type === 'raid') {
             if (!this.mapData.points.dungeons) this.mapData.points.dungeons = [];
             this.mapData.points.dungeons.push(newPoint);
           } else if (newPoint.type === 'regionText') {

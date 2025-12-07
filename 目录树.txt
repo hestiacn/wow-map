@@ -1,4 +1,50 @@
-﻿├── .vscode
+﻿├── .git
+│   ├── hooks
+│   │   ├── applypatch-msg.sample
+│   │   ├── commit-msg.sample
+│   │   ├── fsmonitor-watchman.sample
+│   │   ├── post-update.sample
+│   │   ├── pre-applypatch.sample
+│   │   ├── pre-commit.sample
+│   │   ├── pre-merge-commit.sample
+│   │   ├── pre-push.sample
+│   │   ├── pre-rebase.sample
+│   │   ├── pre-receive.sample
+│   │   ├── prepare-commit-msg.sample
+│   │   ├── push-to-checkout.sample
+│   │   ├── sendemail-validate.sample
+│   │   └── update.sample
+│   ├── info
+│   │   └── exclude
+│   ├── logs
+│   │   ├── refs
+│   │   │   ├── heads
+│   │   │   │   └── master
+│   │   │   └── remotes
+│   │   │       └── origin
+│   │   │           └── HEAD
+│   │   └── HEAD
+│   ├── objects
+│   │   ├── info
+│   │   └── pack
+│   │       ├── pack-7e66643a90e7511f8fafc33190c16d70004ce6e3.idx
+│   │       ├── pack-7e66643a90e7511f8fafc33190c16d70004ce6e3.pack
+│   │       └── pack-7e66643a90e7511f8fafc33190c16d70004ce6e3.rev
+│   ├── refs
+│   │   ├── heads
+│   │   │   └── master
+│   │   ├── remotes
+│   │   │   └── origin
+│   │   │       └── HEAD
+│   │   └── tags
+│   ├── config
+│   ├── description
+│   ├── HEAD
+│   ├── index
+│   └── packed-refs
+├── .github
+│   └── workflows deploy.yml
+├── .vscode
 │   └── settings.json
 ├── docs
 │   ├── .vitepress
@@ -8,12 +54,6 @@
 │   │   │       ├── chunk-BMUHQTAX.js.map
 │   │   │       ├── chunk-D4D2XWKF.js
 │   │   │       ├── chunk-D4D2XWKF.js.map
-│   │   │       ├── chunk-Y2F7D3TJ.js
-│   │   │       ├── chunk-Y2F7D3TJ.js.map
-│   │   │       ├── html2canvas.js
-│   │   │       ├── html2canvas.js.map
-│   │   │       ├── leaflet.js
-│   │   │       ├── leaflet.js.map
 │   │   │       ├── package.json
 │   │   │       ├── vitepress___@vueuse_core.js
 │   │   │       ├── vitepress___@vueuse_core.js.map
@@ -38,64 +78,66 @@
 │   │   │   └── localSearchPlugin.js
 │   │   ├── theme
 │   │   │   ├── components
-│   │   │   │   ├── 404.vue
 │   │   │   │   ├── BackToTop.vue
 │   │   │   │   ├── CopyToClipboardInput.vue
-│   │   │   │   ├── FeatureList.vue
-│   │   │   │   ├── FeaturePage.vue
-│   │   │   │   ├── FeaturePageSection.vue
-│   │   │   │   ├── InstallBuilde.vue
-│   │   │   │   ├── InstallBuilder.test.js
-│   │   │   │   ├── InstallBuilder.vue
-│   │   │   │   ├── InstallPage.vue
 │   │   │   │   ├── MapViewer.vue
+│   │   │   │   ├── NotFound.vue
 │   │   │   │   └── PageHeader.vue
 │   │   │   ├── styles
 │   │   │   │   ├── custom.scss
 │   │   │   │   ├── donate.css
+│   │   │   │   ├── map.css
 │   │   │   │   ├── rainbow.css
 │   │   │   │   └── vars.css
+│   │   │   ├── utils
+│   │   │   │   ├── regionUtils.js
+│   │   │   │   └── tileMerger.js
 │   │   │   └── index.js
 │   │   └── config.js
 │   ├── docs
 │   │   └── map.md
 │   ├── public
+│   │   ├── data
+│   │   │   ├── map-data.json
+│   │   │   └── region-subnames.json
+│   │   ├── fonts
+│   │   │   └── XiHei.woff2
 │   │   ├── images
-│   │   │   ├── brand
-│   │   │   │   ├── dark
-│   │   │   │   │   ├── 1.png
-│   │   │   │   │   ├── 2.png
-│   │   │   │   │   └── 3.png
-│   │   │   │   ├── img
-│   │   │   │   │   ├── 1.jpg
-│   │   │   │   │   ├── 2.jpg
-│   │   │   │   │   ├── 3.jpg
-│   │   │   │   │   ├── 4.jpg
-│   │   │   │   │   ├── 5.jpg
-│   │   │   │   │   └── 6.jpg
-│   │   │   │   └── light
-│   │   │   │       ├── 1.png
-│   │   │   │       ├── 2.png
-│   │   │   │       └── 3.png
-│   │   │   └── logo.png
-│   │   ├── tiles
+│   │   │   ├── map-icons
+│   │   │   │   ├── dungeon.webp
+│   │   │   │   ├── merged.webp
+│   │   │   │   ├── raid.webp
+│   │   │   │   ├── ship.webp
+│   │   │   │   ├── special.webp
+│   │   │   │   └── zeppelin.webp
+│   │   │   ├── maps
+│   │   │   │   ├── regions
+│   │   │   │   │   ├── 005.jpg
+│   │   │   │   │   ├── 006.jpg
+│   │   │   │   │   ├── cn-logo.webp
+│   │   │   │   │   ├── stonetalon.webp
+│   │   │   │   │   └── theramore.webp
+│   │   │   │   └── fullmap.webp
+│   │   │   └── World-of-Warcraft-Logo-2004-present.webp
 │   │   ├── -yvfmf7g8hskjsh44.webp
 │   │   ├── favicon.ico
 │   │   ├── logo.svg
 │   │   └── logo.webp
 │   ├── _data
-│   │   ├── features.js
-│   │   ├── option.js
-│   │   ├── options.js
-│   │   └── team.js
+│   │   └── mapConfig.js
+│   ├── .gitignore
 │   └── index.md
 ├── scripts
 │   ├── generate-tiles.js
 │   └── tile-server.js
+├── .gitignore
 ├── package.json
 ├── peacemaker-corner.md
 ├── pnpm-lock.yaml
+├── README.md
 ├── site.webmanifest
 ├── Tree2Utf8.bat
 ├── yarn.lock
 └── 目录树.txt
+
+[扫描目录]C:\Users\Administrator\wow-map

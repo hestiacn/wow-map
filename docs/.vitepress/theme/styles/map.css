@@ -1109,3 +1109,9 @@ kbd {
   font-size: 0.9em;
   margin-top: 5px;
 }
+.icon-img {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  margin-right: 8px;
+}

@@ -1,0 +1,32 @@
+name: hestia
+on:
+  push:
+    branches: [master]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.7.1
+
+      - run: pnpm install
+      - run: pnpm run dev
+      - run: ls -la docs/.vitepress/dist  
+
+      - name: Deploy to Workers
+        uses: cloudflare/wrangler-action@3.0.0
+        with:
+          command: pages deploy ./docs/.vitepress/dist --project-name wow-map
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

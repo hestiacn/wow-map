@@ -607,7 +607,7 @@
         "type": "dungeon",
         "level": "25-35",
         "region": "kalimdor",
-        "position": { "x": 2900, "y": 4500 }
+        "position": { "x": 2255, "y": 5060 }
       },
       {
         "id": "scarlethonnastery",
@@ -623,7 +623,7 @@
         "type": "dungeon",
         "level": "35-40",
         "region": "kalimdor",
-        "position": { "x": 2950, "y": 4300 }
+        "position": { "x": 2581, "y": 5264 }
       },
       {
         "id": "uldaman",
@@ -639,7 +639,7 @@
         "type": "dungeon",
         "level": "42-46",
         "region": "kalimdor",
-        "position": { "x": 2800, "y": 5800 }
+        "position": { "x": 2658, "y": 5871 }
       },
       {
         "id": "maraudon",
@@ -647,7 +647,7 @@
         "type": "dungeon",
         "level": "43-49",
         "region": "kalimdor",
-        "position": { "x": 1500, "y": 4800 }
+        "position": { "x": 931, "y": 4182 }
       },
       {
         "id": "sunkentemple",
@@ -687,7 +687,7 @@
         "type": "dungeon",
         "level": "55-60",
         "region": "kalimdor",
-        "position": { "x": 2800, "y": 3200 }
+        "position": { "x": 1461, "y": 4864 }
       },
       {
         "id": "blackwinglair",
@@ -721,7 +721,7 @@
     "stonetalon": {
       "name": { "zh": "石爪山脉", "en": "Stonetalon Mountains" },
       "bounds": { "x": 836, "y": 2716, "width": 1427, "height": 1289 },
-      "image": "/images/maps/regions/fullmap.webp",
+      "image": "/images/maps/regions/stonetalon.webp",
       "canvasSize": { "width": 3072, "height": 3072 }
     },
     "stranglethorn": {
