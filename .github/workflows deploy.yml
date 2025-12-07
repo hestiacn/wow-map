@@ -20,7 +20,7 @@ jobs:
           version: 8.7.1
 
       - run: pnpm install
-      - run: pnpm run dev
+      - run: pnpm run build
       - run: ls -la docs/.vitepress/dist  
 
       - name: Deploy to Workers
