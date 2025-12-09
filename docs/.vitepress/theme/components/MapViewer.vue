@@ -1753,47 +1753,38 @@ export default {
     },
 
     drawRegionMapTiles() {
-    if (this.exportInProgress) return;
-    if (!this.mapData?.regions) return;
-    
-    Object.entries(this.mapData.regions).forEach(([id, region]) => {
+      if (!this.mapData?.regions) return;
+      Object.entries(this.mapData.regions).forEach(([id, region]) => {
         if (id === 'eastern-kingdoms' || id === 'kalimdor') return;
         if (!this.regionImageCache[id]) {
-        this.regionImageCache[id] = new Image();
-        this.regionImageCache[id].onload = () => {
+          this.regionImageCache[id] = new Image();
+          this.regionImageCache[id].onload = () => {
             this.drawMap();
-        };
-        this.regionImageCache[id].onerror = (e) => {
-            console.warn(`无法加载区域图片: ${region.image}`, e);
+          };
+          this.regionImageCache[id].onerror = () => {
+            console.warn(`无法加载区域图片: ${region.image}`);
             delete this.regionImageCache[id];
-            this.createPlaceholderForRegion(id, region);
-        };
-        let imagePath = region.image;
-        if (!imagePath.startsWith('http') && !imagePath.startsWith('/')) {
-            imagePath = `/images/maps/regions/${imagePath}`;
+          };
+          this.regionImageCache[id].src = region.image;
+          return;
         }
-        this.regionImageCache[id].src = imagePath;
-        return;
+        if (this.regionImageCache[id].complete && this.regionImageCache[id].naturalWidth !== 0) {
+          try {
+            this.ctx.globalAlpha = 0.8;
+            this.ctx.drawImage(
+              this.regionImageCache[id],
+              region.bounds.x,
+              region.bounds.y,
+              region.bounds.width,
+              region.bounds.height
+            );
+            this.ctx.globalAlpha = 1.0;
+          } catch (error) {
+            console.warn(`绘制区域图片失败: ${region.image}`, error);
+            delete this.regionImageCache[id];
+          }
         }
-        
-            if (this.regionImageCache[id].complete && this.regionImageCache[id].naturalWidth !== 0) {
-            try {
-                this.ctx.globalAlpha = 0.8;
-                this.ctx.drawImage(
-                this.regionImageCache[id],
-                region.bounds.x,
-                region.bounds.y,
-                region.bounds.width,
-                region.bounds.height
-                );
-                this.ctx.globalAlpha = 1.0;
-            } catch (error) {
-                console.warn(`绘制区域图片失败: ${region.image}`, error);
-                delete this.regionImageCache[id];
-            }
-            }
-        }
-    });
+      });
     },
 
     drawRegionBounds() {
@@ -3083,3 +3074,4 @@ export default {
 };
 
 </script>
+
