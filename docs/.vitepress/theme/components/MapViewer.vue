@@ -200,12 +200,21 @@
               <span>{{ selectedPoint.textColor.toUpperCase() }}</span>
             </div>
           </div>
-          
+          <div class="form-group">
+            <label>文字描边颜色:</label>
+            <div class="color-display">
+              <span class="color-preview" :style="{ backgroundColor: selectedPoint.textStrokeColor || '#6fb366ff' }"></span>
+              <span>{{ (selectedPoint.textStrokeColor || '#6fb366ff').toUpperCase() }}</span>
+            </div>
+          </div>
           <div class="form-group">
             <label>字体大小:</label>
             <span>{{ selectedPoint.fontSize || 24 }}px</span>
           </div>
-          
+          <div class="form-group" v-if="selectedPoint.type === 'regionText'">
+            <label>描边宽度:</label>
+            <span>{{ selectedPoint.textStrokeWidth || 3 }}px</span>
+          </div>
           <!-- 保存提示 -->
           <div v-if="!selectedPoint.fromSubnames" class="save-hint">
             <div class="hint-icon">💡</div>
@@ -253,7 +262,10 @@
           <label>等级:</label>
           <span>{{ selectedPoint.level }}</span>
         </div>
-        
+        <div class="scroll-indicator" :class="{ visible: showScrollIndicator, hidden: !showScrollIndicator }">
+          <div class="indicator-arrow">↓</div>
+          <small>继续向下滚动查看操作按钮</small>
+        </div>
         <div class="panel-actions">
           <button @click="editPoint(selectedPoint)" class="btn-primary">编辑</button>
           <button @click="removePoint(selectedPoint)" class="btn-danger">删除</button>
@@ -306,7 +318,42 @@
                 <span>{{ newPoint.textColor.toUpperCase() }}</span>
               </div>
             </div>
-            
+            <div class="form-group">
+                <label>文字描边颜色:</label>
+                <div class="color-picker-group">
+                <input type="color" v-model="newPoint.textStrokeColor" class="color-picker">
+                <span class="color-preview" :style="{ backgroundColor: newPoint.textStrokeColor }"></span>
+                <span>{{ newPoint.textStrokeColor.toUpperCase() }}</span>
+                <small>默认: #6fb366ff (淡绿色)</small>
+                </div>
+            </div>
+            <div class="form-group">
+              <label>描边宽度:</label>
+              <select v-model="newPoint.textStrokeWidth">
+                <option value="1">细 (1px)</option>
+                <option value="2">中 (2px)</option>
+                <option value="3">标准 (3px)</option>
+                <option value="4">粗 (4px)</option>
+                <option value="5">特粗 (5px)</option>
+                <option value="6">超粗 (6px)</option>
+              </select>
+              <!-- 添加一个预览效果 -->
+              <div class="stroke-preview" :style="{
+                width: '100%',
+                height: '4px',
+                marginTop: '5px',
+                background: newPoint.textStrokeColor || '#6fb366ff',
+                border: '1px solid #ccc'
+              }">
+                <div class="stroke-preview-inner" :style="{
+                  height: '100%',
+                  background: newPoint.textColor || '#f5d20bff',
+                  margin: '0 auto',
+                  width: '60%'
+                }"></div>
+              </div>
+              <small>预览: {{ newPoint.textStrokeWidth || 3 }}px 描边</small>
+            </div>
             <!-- 字体大小选择 -->
             <div class="form-group">
               <label>字体大小:</label>
@@ -709,17 +756,20 @@ export default {
       hoverPosition: null,
       hoverPoint: null,
       dataLoaded: false,
+      panelContent: null,
+      showScrollIndicator: false,
       currentWorldCoords: { x: 0, y: 0 },
       regionAdjustmentStage: false,
       showRegionAdjustmentControls: false,
       
       // 图标图片定义
       iconImages: {
-        zeppelin: null,  // 部落飞艇
-        ship: null,      // 联盟船坞
-        special: null,   // 地铁
-        dungeon: null,   // 5人副本
-        raid: null       // 团队副本
+        zeppelin: null,
+        ship: null,
+        special: null,
+        dungeon: null,
+        raid: null,
+        druid: null
       },
       iconsLoaded: false,
       
@@ -889,6 +939,9 @@ export default {
     this.loadMap();
     this.setupEventListeners();
     await this.loadIcons(); // 加载图标图片
+    this.$nextTick(() => {
+      this.setupPanelScroll();
+    });
   },
   beforeUnmount() {
     this.removeEventListeners();
@@ -1396,7 +1449,8 @@ export default {
         ship: '/images/map-icons/ship.webp',
         special: '/images/map-icons/special.webp',
         dungeon: '/images/map-icons/dungeon.webp',
-        raid: '/images/map-icons/raid.webp'
+        raid: '/images/map-icons/raid.webp',
+        druid: '/images/map-icons/druid.webp'
       };
       
       const loadPromises = Object.entries(iconPaths).map(([key, path]) => {
@@ -1424,16 +1478,29 @@ export default {
     
     // 检查是否应该使用图片图标
     shouldUseIcon(point) {
-      const iconTypes = ['zeppelin', 'ship', 'special', 'dungeon', 'raid'];
-      return iconTypes.includes(point.type) && this.iconsLoaded && this.iconImages[point.type];
-    },
+    const iconTypes = ['zeppelin', 'ship', 'special', 'dungeon', 'raid'];
+    const professionTypes = ['druid'];
     
+      if (iconTypes.includes(point.type) && this.iconsLoaded && this.iconImages[point.type]) {
+          return true;
+      }
+      // 检查是否为职业点
+      if (point.profession && professionTypes.includes(point.profession) && 
+          this.iconsLoaded && this.iconImages[point.profession]) {
+        return true;
+      }
+      
+      return false;
+    },
     // 获取图标图片
     getIconImage(point) {
-      if (this.shouldUseIcon(point)) {
+    if (this.shouldUseIcon(point)) {
+        if (point.profession && this.iconImages[point.profession]) {
+        return this.iconImages[point.profession];
+        }
         return this.iconImages[point.type];
-      }
-      return null;
+    }
+    return null;
     },
     
     async loadMapData() {
@@ -1523,124 +1590,124 @@ export default {
     },
     
     async loadRegionSubnames() {
-      try {
+    try {
         const response = await fetch('/data/region-subnames.json');
         if (response.ok) {
-          const subnamesData = await response.json();
-          
-          // 确保 regionSubnames 是数组
-          if (Array.isArray(subnamesData)) {
+        const subnamesData = await response.json();
+        
+        // 检查数据结构
+        console.log('加载的区域文本数据:', subnamesData);
+        
+        // 确保 regionSubnames 是数组
+        if (Array.isArray(subnamesData.regionTexts)) {
+            this.regionSubnames = subnamesData.regionTexts;
+        } else if (Array.isArray(subnamesData)) {
+            // 如果是数组直接使用
             this.regionSubnames = subnamesData;
-          } else if (subnamesData && typeof subnamesData === 'object') {
-            // 如果是对象，转换为数组
-            this.regionSubnames = Object.values(subnamesData);
-          } else {
-            this.regionSubnames = [];
-          }
-          
-          console.log('区域文本标记数据加载成功:', this.regionSubnames.length, '条记录');
-          
-          // 将区域文本标记数据合并到地图数据中
-          this.mergeRegionSubnames();
+        } else if (subnamesData && typeof subnamesData === 'object') {
+            // 如果是对象，尝试获取 regionTexts 数组
+            this.regionSubnames = subnamesData.regionTexts || [];
         } else {
-          console.warn('无法加载区域文本标记文件，使用空数据');
-          this.regionSubnames = [];
+            this.regionSubnames = [];
         }
-      } catch (error) {
+        
+        console.log('区域文本标记数据加载成功:', this.regionSubnames.length, '条记录');
+        
+        // 将区域文本标记数据合并到地图数据中
+        this.mergeRegionSubnames();
+        } else {
+        console.warn('无法加载区域文本标记文件，使用空数据');
+        this.regionSubnames = [];
+        }
+    } catch (error) {
         console.warn('加载区域文本标记数据时出错:', error);
         this.regionSubnames = [];
-      }
+    }
     },
     
     // 修改：合并区域文本标记数据到地图数据
     mergeRegionSubnames() {
-      if (!this.regionSubnames || !Array.isArray(this.regionSubnames)) {
+    if (!this.regionSubnames || !Array.isArray(this.regionSubnames)) {
         return;
-      }
-      
-      // 确保 regionTexts 数组存在
-      if (!this.mapData.points.regionTexts) {
+    }
+    if (!this.mapData.points.regionTexts) {
         this.mapData.points.regionTexts = [];
-      }
-      
-      // 清空现有的区域文本标记（避免重复）
-      this.mapData.points.regionTexts = this.mapData.points.regionTexts.filter(
+    }
+    this.mapData.points.regionTexts = this.mapData.points.regionTexts.filter(
         point => point.type !== 'regionText' || !point.fromSubnames
-      );
-      
-      // 添加从 region-subnames.json 加载的标记
-      this.regionSubnames.forEach(subname => {
-        // 确保 subname 是有效的对象
+    );
+    this.regionSubnames.forEach(subname => {
         if (!subname || typeof subname !== 'object') return;
-        
+        let region = 'full';
+        const x = subname.position?.x || 0;
+        const y = subname.position?.y || 0;
+        if (x >= 4720) {
+        region = 'eastern-kingdoms';
+        } 
+        else if (x >= 0 && x < 4720) {
+        region = 'kalimdor';
+        }
         const regionTextPoint = {
-          id: subname.id || RegionUtils.generateId(),
-          name: { 
+        id: subname.id || RegionUtils.generateId(),
+        name: { 
             zh: subname.languages?.zh || '区域标注', 
             en: subname.languages?.en || 'Region Text' 
-          },
-          type: 'regionText',
-          faction: 'neutral',
-          position: subname.position || { x: 0, y: 0 },
-          languages: subname.languages || {},
-          textColor: subname.textColor || '#FFFFFF',
-          fontSize: subname.fontSize || 24,
-          fromSubnames: true // 标记来自 region-subnames.json
+        },
+        type: 'regionText',
+        faction: 'neutral',
+        region: region,
+        position: subname.position || { x: 0, y: 0 },
+        languages: subname.languages || {},
+        textColor: subname.textColor || '#f5d20bff',
+        textStrokeColor: subname.textStrokeColor || '#6fb366ff',
+        textStrokeWidth: subname.textStrokeWidth || 3,
+        fontSize: subname.fontSize || 24,
+        fromSubnames: true // 标记来自 region-subnames.json
         };
         
         this.mapData.points.regionTexts.push(regionTextPoint);
-      });
-      
-      console.log('区域文本标记数据合并完成，共', this.regionSubnames.length, '条记录');
+    });
     },
     
     // 修改：处理区域文本标注导出，现在保存到 regionSubnames 中
     handleRegionTextExport(regionTextPoint) {
-      // 构建要保存到 region-subnames.json 的数据
-      const subnameData = {
+    const subnameData = {
         id: regionTextPoint.id,
         position: {
-          x: Math.round(regionTextPoint.position.x),
-          y: Math.round(regionTextPoint.position.y)
+        x: Math.round(regionTextPoint.position.x),
+        y: Math.round(regionTextPoint.position.y)
         },
         languages: {},
-        textColor: regionTextPoint.textColor || '#FFFFFF',
+        textColor: regionTextPoint.textColor || '#f5d20bff',
+        textStrokeColor: regionTextPoint.textStrokeColor || '#6fb366ff',
+        textStrokeWidth: regionTextPoint.textStrokeWidth || 3,
         fontSize: regionTextPoint.fontSize || 24
-      };
-      
-      // 只添加有内容的语言
-      Object.entries(regionTextPoint.languages).forEach(([lang, text]) => {
+    };
+    Object.entries(regionTextPoint.languages).forEach(([lang, text]) => {
         if (text && text.trim()) {
-          subnameData.languages[lang] = text.trim();
+        subnameData.languages[lang] = text.trim();
         }
-      });
-      
-      // 确保 regionSubnames 是数组
-      if (!this.regionSubnames) {
+    });
+    if (!this.regionSubnames) {
         this.regionSubnames = [];
-      }
-      
-      // 检查是否已存在相同ID的条目
-      const existingIndex = this.regionSubnames.findIndex(item => item && item.id === subnameData.id);
-      if (existingIndex > -1) {
+    }
+    const existingIndex = this.regionSubnames.findIndex(item => item && item.id === subnameData.id);
+    if (existingIndex > -1) {
         this.regionSubnames[existingIndex] = subnameData;
-      } else {
+    } else {
         this.regionSubnames.push(subnameData);
-      }
-      
-      // 创建下载链接
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.regionSubnames, null, 2));
-      const downloadAnchorNode = document.createElement('a');
-      downloadAnchorNode.setAttribute("href", dataStr);
-      downloadAnchorNode.setAttribute("download", "region-subnames.json");
-      document.body.appendChild(downloadAnchorNode);
-      downloadAnchorNode.click();
-      document.body.removeChild(downloadAnchorNode);
-      
-      // 显示提示信息
-      alert(`区域名称标注已保存到 region-subnames.json 数据中！\n\n请用下载的文件替换原文件：\ndocs/public/data/region-subnames.json\n\n坐标: (${subnameData.position.x}, ${subnameData.position.y})\n文本颜色: ${subnameData.textColor}\n字体大小: ${subnameData.fontSize}px`);
-      this.mergeRegionSubnames();
-      this.drawMap();
+    }
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.regionSubnames, null, 2));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", "region-subnames.json");
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    document.body.removeChild(downloadAnchorNode);
+    
+    alert(`区域名称标注已保存到 region-subnames.json 数据中！\n\n请用下载的文件替换原文件：\ndocs/public/data/region-subnames.json\n\n坐标: (${subnameData.position.x}, ${subnameData.position.y})\n文本颜色: ${subnameData.textColor}\n描边颜色: ${subnameData.textStrokeColor}\n描边宽度: ${subnameData.textStrokeWidth}px\n字体大小: ${subnameData.fontSize}px`);
+    this.mergeRegionSubnames();
+    this.drawMap();
     },
     
     initCanvas() {
@@ -1884,72 +1951,72 @@ export default {
     },
     
     drawPoints() {
-      this.currentPoints.forEach(point => {
+    const regionTexts = this.currentPoints.filter(point => point.type === 'regionText');
+    const otherPoints = this.currentPoints.filter(point => point.type !== 'regionText');
+    otherPoints.forEach(point => {
         this.drawPoint(point);
-      });
-      
-      if (this.hoverPoint && !this.addMarkerMode && !this.placingRegion) {
+    });
+    regionTexts.forEach(point => {
+        this.drawRegionText(point);
+    });
+    if (this.hoverPoint && !this.addMarkerMode && !this.placingRegion) {
+        if (this.hoverPoint.type === 'regionText') {
+        this.drawRegionText(this.hoverPoint, true);
+        } else {
         this.drawPoint(this.hoverPoint, true);
-      }
+        }
+    }
     },
 
     // 绘制区域文本标注
     drawRegionText(point, isHover = false) {
-      let worldX, worldY;
-      
-      if (this.currentRegion === 'full') {
+    let worldX, worldY;
+    
+    if (this.currentRegion === 'full') {
         worldX = point.position.x;
         worldY = point.position.y;
-      } else {
+    } else {
         const region = this.mapData?.regions[this.currentRegion];
-        if (!region || point.region !== this.currentRegion) {
-          return;
+        if (!region) return;
+        if (point.region && point.region !== this.currentRegion) {
+        return;
         }
-        
-        const regionX = ((point.position.x - region.bounds.x) / region.bounds.width) * this.canvas.width;
-        const regionY = ((point.position.y - region.bounds.y) / region.bounds.height) * this.canvas.height;
-        
-        worldX = regionX;
-        worldY = regionY;
+        worldX = ((point.position.x - region.bounds.x) / region.bounds.width) * this.canvas.width;
+        worldY = ((point.position.y - region.bounds.y) / region.bounds.height) * this.canvas.height;
+    }
+    
+    const text = point.languages[this.currentLanguage] ||
+                point.languages.zh || // 优先显示中文
+                Object.values(point.languages).find(t => t && t.trim()) ||
+                '';
+            
+    if (!text) return;
+    
+    const textColor = point.textColor || '#f5d20bff';
+    const textStrokeColor = point.textStrokeColor || '#6fb366ff';
+    const textStrokeWidth = point.textStrokeWidth || 3;
+    const fontSize = point.fontSize || 24;
+    
+    this.ctx.save();
+    this.ctx.strokeStyle = textStrokeColor;
+    this.ctx.lineWidth = textStrokeWidth; 
+    this.ctx.lineWidth = 3;
+    this.ctx.lineJoin = 'round';
+    this.ctx.font = `bold ${fontSize}px Arial`;
+    this.ctx.textAlign = 'center';
+    this.ctx.textBaseline = 'middle';
+    if (isHover) {
+        this.ctx.fillStyle = '#FFFF00';
+        this.ctx.strokeStyle = '#000000';
+        this.ctx.lineWidth = textStrokeWidth + 1;
+    } else {
+        this.ctx.fillStyle = textColor;
+    }
+      if (textStrokeWidth > 0) {
+        this.ctx.strokeText(text, worldX, worldY);
       }
-      
-      // 根据当前语言显示对应的文本，优先显示中文
-      const text = point.languages[this.currentLanguage] ||
-                  point.languages.zh ||  // 优先显示中文
-                  Object.values(point.languages).find(t => t && t.trim()) ||
-                  '';
-        
-      if (!text) return;
-      
-      // 使用自定义文本颜色，默认为白色
-      const textColor = point.textColor || '#FFFFFF';
-      // 使用自定义字体大小，默认为24px
-      const fontSize = point.fontSize || 24;
-      
-      // 设置文本样式
-      this.ctx.fillStyle = isHover ? '#FFFF00' : textColor; // 悬停时显示黄色
-      this.ctx.strokeStyle = '#000000';
-      this.ctx.lineWidth = 3 / this.viewport.scale;
-      this.ctx.lineJoin = 'round';
-      this.ctx.font = `bold ${Math.max(16, fontSize / this.viewport.scale)}px Arial`;
-      this.ctx.textAlign = 'center';
-      this.ctx.textBaseline = 'middle';
-      
-      // 绘制文本描边（黑色边框）
-      this.ctx.strokeText(text, worldX, worldY);
-      // 绘制文本填充（自定义颜色或黄色）
       this.ctx.fillText(text, worldX, worldY);
-      
-      // 悬停时显示提示
-      if (isHover) {
-        this.ctx.fillStyle = 'rgba(255, 255, 0, 0.8)';
-        this.ctx.font = `${Math.max(12, 14 / this.viewport.scale)}px Arial`;
-        this.ctx.textAlign = 'left';
-        this.ctx.textBaseline = 'top';
-        
-        const infoText = '区域名称标注 - 点击查看详情';
-        this.ctx.fillText(infoText, worldX + 10, worldY + 10);
-      }
+      this.ctx.restore();
     },
 
     // 绘制图标图片
@@ -1983,21 +2050,21 @@ export default {
     },
     // 更新 drawPoint 方法
     drawPoint(point, isHover = false) {
-      // 区域文本标注不显示标记点，只显示文本
-      if (point.type === 'regionText') {
+    // 区域文本标注不显示标记点，只显示文本
+    if (point.type === 'regionText') {
         this.drawRegionText(point, isHover);
         return;
-      }
-      
-      let worldX, worldY;
-      
-      if (this.currentRegion === 'full') {
+    }
+    
+    let worldX, worldY;
+    
+    if (this.currentRegion === 'full') {
         worldX = point.position.x;
         worldY = point.position.y;
-      } else {
+    } else {
         const region = this.mapData?.regions[this.currentRegion];
         if (!region || point.region !== this.currentRegion) {
-          return; 
+        return; 
         }
         
         const regionX = ((point.position.x - region.bounds.x) / region.bounds.width) * this.canvas.width;
@@ -2005,57 +2072,70 @@ export default {
         
         worldX = regionX;
         worldY = regionY;
-      }
-      
-      // 检查是否为需要显示图标的类型
-      const iconTypes = ['ship', 'zeppelin', 'special', 'dungeon', 'raid'];
-      
-      if (iconTypes.includes(point.type) && this.iconsLoaded && this.iconImages[point.type]) {
+    }
+    
+    // 1. 优先检查职业图标
+    if (point.profession && this.iconsLoaded && this.iconImages[point.profession]) {
+        // 使用职业图标
+        this.drawIconImage(point, worldX, worldY, this.iconImages[point.profession], isHover);
+        
+        // 绘制标签
+        if (this.viewport.scale > 0.5) {
+        const labelOffset = this.iconSize + 5;
+        this.drawPointLabel(point, worldX, worldY, labelOffset, isHover);
+        }
+        return; // 重要：绘制完职业图标后直接返回
+    }
+    
+    // 2. 检查是否为需要显示图标的类型
+    const iconTypes = ['ship', 'zeppelin', 'special', 'dungeon', 'raid'];
+    if (iconTypes.includes(point.type) && this.iconsLoaded && this.iconImages[point.type]) {
         // 使用图片图标（固定大小）
         this.drawIconImage(point, worldX, worldY, this.iconImages[point.type], isHover);
         
         // 绘制标签 - 只在缩放较大时显示
         if (this.viewport.scale > 0.5) {
-          const labelOffset = this.iconSize + 5; // 固定偏移量
-          this.drawPointLabel(point, worldX, worldY, labelOffset, isHover);
+        const labelOffset = this.iconSize + 5; // 固定偏移量
+        this.drawPointLabel(point, worldX, worldY, labelOffset, isHover);
         }
-      } else {
-            // 使用原来的圆形标记方式
-            const typeConfig = this.mapData?.config?.pointTypes[point.type] || { size: 18, color: '#2196F3' };
-            
-            // 修复阵营颜色配置
-            let factionColor;
-            switch(point.faction) {
-            case 'alliance':
-                factionColor = '#0078FF'; // 联盟蓝色
-                break;
-            case 'horde':
-                factionColor = '#E10B00'; // 部落红色
-                break;
-            case 'neutral':
-                factionColor = '#FFD700'; // 中立金色
-                break;
-            }
-            
-            // 使用固定大小，不随缩放变化
-            const baseSize = typeConfig.size || 18;
-            const fixedSize = isHover ? baseSize * 1.2 : baseSize;
-            
-            // 绘制圆形标记
-            this.ctx.fillStyle = factionColor;
-            this.ctx.beginPath();
-            this.ctx.arc(worldX, worldY, fixedSize, 0, 2 * Math.PI);
-            this.ctx.fill();
-            
-            this.ctx.strokeStyle = isHover ? '#FFFF00' : '#FFFFFF';
-            this.ctx.lineWidth = isHover ? 3 : 2;
-            this.ctx.stroke();
-            
-            // 绘制标签 - 只在缩放较大时显示
-            if (this.viewport.scale > 0.5) {
-            this.drawPointLabel(point, worldX, worldY, fixedSize, isHover);
-            }
-        }
+        return; // 重要：绘制完图标后直接返回
+    }
+    
+    // 3. 默认使用圆形标记方式
+    const typeConfig = this.mapData?.config?.pointTypes[point.type] || { size: 18, color: '#2196F3' };
+    
+    // 修复阵营颜色配置 - 优先使用阵营颜色，没有则使用类型默认颜色
+    let pointColor = typeConfig.color;
+    switch(point.faction) {
+        case 'alliance':
+        pointColor = '#0078FF'; // 联盟蓝色
+        break;
+        case 'horde':
+        pointColor = '#E10B00'; // 部落红色
+        break;
+        case 'neutral':
+        pointColor = '#FFD700'; // 中立金色
+        break;
+    }
+    
+    // 使用固定大小，不随缩放变化
+    const baseSize = typeConfig.size || 18;
+    const fixedSize = isHover ? baseSize * 1.2 : baseSize;
+    
+    // 绘制圆形标记
+    this.ctx.fillStyle = pointColor;
+    this.ctx.beginPath();
+    this.ctx.arc(worldX, worldY, fixedSize, 0, 2 * Math.PI);
+    this.ctx.fill();
+    
+    this.ctx.strokeStyle = isHover ? '#FFFF00' : '#FFFFFF';
+    this.ctx.lineWidth = isHover ? 3 : 2;
+    this.ctx.stroke();
+    
+    // 绘制标签 - 只在缩放较大时显示
+    if (this.viewport.scale > 0.5) {
+        this.drawPointLabel(point, worldX, worldY, fixedSize, isHover);
+    }
     },
     drawPointLabel(point, x, y, offset, isHover) {
       this.ctx.fillStyle = '#FFFFFF';
@@ -2112,16 +2192,22 @@ export default {
             const connectionKey = [point.id, targetPoint.id].sort().join('-');
             
             if (!drawnConnections.has(connectionKey)) {
+                if (point.showDirection || point.directionType) {
+                const directionType = point.directionType || 'special';
+                this.drawTransportLine(point, targetPoint, directionType);
+                } else {
                 this.drawConnection(point, targetPoint, 'flight');
+                }
                 drawnConnections.add(connectionKey);
             }
             }
         });
         });
     }
+    
     if (this.showTransport && this.showTransportRoutes) {
         this.drawTransportRoutes();
-        }
+    }
     },
 
     // 新增：检查两个点是否在同一地图区域
@@ -2316,7 +2402,42 @@ export default {
       
       return styles[type] || styles.flight;
     },
+    setupPanelScroll() {
+      this.$nextTick(() => {
+        const panel = document.querySelector('.point-panel .panel-content');
+        if (panel) {
+          this.panelContent = panel;
+          panel.addEventListener('scroll', this.handlePanelScroll);
+          // 初始检查
+          this.handlePanelScroll();
+        }
+      });
+    },
 
+    handlePanelScroll() {
+      if (!this.panelContent) return;
+      
+      const { scrollTop, scrollHeight, clientHeight } = this.panelContent;
+      // 如果内容高度大于可视区域高度，并且未滚动到底部，显示指示器
+      this.showScrollIndicator = scrollHeight > clientHeight && 
+                                scrollTop < (scrollHeight - clientHeight - 100);
+    },
+
+    scrollToBottom() {
+      if (this.panelContent) {
+        this.panelContent.scrollTo({
+          top: this.panelContent.scrollHeight,
+          behavior: 'smooth'
+        });
+      }
+    },
+
+    // 清理事件监听
+    beforeUnmount() {
+      if (this.panelContent) {
+        this.panelContent.removeEventListener('scroll', this.handlePanelScroll);
+      }
+    },
   drawConnection(pointA, pointB, connectionType = 'flight') {
     let coordsA, coordsB;
     
@@ -2574,7 +2695,9 @@ export default {
           ko: '', // 韩语
           ja: '', // 日语
         },
-        textColor: '#FFFFFF', // 默认文本颜色为白色
+        textColor: '#f5d20bff', // 默认文本颜色为金色
+        textStrokeColor: '#6fb366ff', //文字描边颜色为淡绿色
+        textStrokeWidth: 3,
         fontSize: 24 // 默认字体大小
       };
     },
@@ -2677,7 +2800,9 @@ export default {
         level: point.level || '',
         note: point.note ? { ...point.note } : { zh: '', en: '' },
         languages: point.languages ? { ...point.languages } : { zh: '', en: '', ko: '', ja: '' },
-        textColor: point.textColor || '#FFFFFF',
+        textColor: point.textColor || '#f5d20bff',
+        textStrokeColor: point.textStrokeColor || '#6fb366ff',
+        textStrokeWidth: point.textStrokeWidth || 3,
         fontSize: point.fontSize || 24
       };
       this.showAddDialog = true;
@@ -2909,53 +3034,43 @@ export default {
 
     // 修改：处理区域文本标注导出，现在保存到 regionSubnames 中
     handleRegionTextExport(regionTextPoint) {
-      // 构建要保存到 region-subnames.json 的数据
-      const subnameData = {
+    const subnameData = {
         id: regionTextPoint.id,
         position: {
-          x: Math.round(regionTextPoint.position.x),
-          y: Math.round(regionTextPoint.position.y)
+        x: Math.round(regionTextPoint.position.x),
+        y: Math.round(regionTextPoint.position.y)
         },
         languages: {},
-        textColor: regionTextPoint.textColor || '#FFFFFF',
+        textColor: regionTextPoint.textColor || '#f5d20bff',
+        textStrokeColor: regionTextPoint.textStrokeColor || '#6fb366ff',
+        textStrokeWidth: regionTextPoint.textStrokeWidth || 3,
         fontSize: regionTextPoint.fontSize || 24
-      };
-      
-      // 只添加有内容的语言
-      Object.entries(regionTextPoint.languages).forEach(([lang, text]) => {
+    };
+    Object.entries(regionTextPoint.languages).forEach(([lang, text]) => {
         if (text && text.trim()) {
-          subnameData.languages[lang] = text.trim();
+        subnameData.languages[lang] = text.trim();
         }
-      });
-      
-      // 添加到内存中的 regionSubnames 数据
-      if (!this.regionSubnames) {
+    });
+    if (!this.regionSubnames) {
         this.regionSubnames = [];
-      }
-      
-      // 检查是否已存在相同ID的条目
-      const existingIndex = this.regionSubnames.findIndex(item => item.id === subnameData.id);
-      if (existingIndex > -1) {
+    }
+    const existingIndex = this.regionSubnames.findIndex(item => item && item.id === subnameData.id);
+    if (existingIndex > -1) {
         this.regionSubnames[existingIndex] = subnameData;
-      } else {
+    } else {
         this.regionSubnames.push(subnameData);
-      }
-      
-      // 创建下载链接
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.regionSubnames, null, 2));
-      const downloadAnchorNode = document.createElement('a');
-      downloadAnchorNode.setAttribute("href", dataStr);
-      downloadAnchorNode.setAttribute("download", "region-subnames.json");
-      document.body.appendChild(downloadAnchorNode);
-      downloadAnchorNode.click();
-      document.body.removeChild(downloadAnchorNode);
-      
-      // 显示提示信息
-      alert(`区域名称标注已保存到 region-subnames.json 数据中！\n\n请用下载的文件替换原文件：\ndocs/public/data/region-subnames.json\n\n坐标: (${subnameData.position.x}, ${subnameData.position.y})\n文本颜色: ${subnameData.textColor}\n字体大小: ${subnameData.fontSize}px`);
-      
-      // 重新合并数据以确保界面显示最新内容
-      this.mergeRegionSubnames();
-      this.drawMap();
+    }
+    // 创建下载链接
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.regionSubnames, null, 2));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", "region-subnames.json");
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    document.body.removeChild(downloadAnchorNode);
+    alert(`区域名称标注已保存到 region-subnames.json 数据中！\n\n请用下载的文件替换原文件：\ndocs/public/data/region-subnames.json\n\n坐标: (${subnameData.position.x}, ${subnameData.position.y})\n文本颜色: ${subnameData.textColor}\n描边颜色: ${subnameData.textStrokeColor}\n字体大小: ${subnameData.fontSize}px`);
+    this.mergeRegionSubnames();
+    this.drawMap();
     },
 
     exportData() {
@@ -3072,6 +3187,4 @@ export default {
     }
   }
 };
-
 </script>
-

@@ -49,7 +49,7 @@
 
 ```bash
 # 打开命令行，输入以下命令
-git clone https://github.com/您的用户名/wow-map.git
+git clone https://github.com/hestiacn/wow-map.git
 cd wow-map
 ```
 
@@ -68,6 +68,9 @@ cd 您的文件夹路径/wow-map
 1. 安装项目所需依赖：
 
 ```bash
+
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+
 npm install
 # 或者使用 yarn（如果已安装）
 # yarn install
@@ -80,24 +83,23 @@ npm install
 安装完成后，运行以下命令启动项目：
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 看到类似以下信息表示启动成功：
 
 ```
-  vite v2.x.x dev server running at:
+  vitepress v1.2.2
 
-  > Local: http://localhost:3000/
-  > Network: http://192.168.x.x:3000/
-
-  ready in xxx ms
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h to show help
 ```
 
 🌐 第五步：在浏览器中访问
 
 1. 打开您的浏览器（推荐 Chrome 或 Firefox）
-2. 在地址栏输入：http://localhost:3000
+2. 在地址栏输入：http://localhost:5173
 3. 按回车键，您将看到地图工具页面！
 
 🎉 恭喜！ 现在您可以在本地运行地图工具了！

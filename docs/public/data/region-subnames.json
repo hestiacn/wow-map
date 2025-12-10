@@ -451,10 +451,7 @@
     },
     {
       "id": "azshara",
-      "position": {
-        "x": 1800,
-        "y": 2900
-      },
+      "position": { "x": 1800, "y": 2900 },
       "languages": {
         "zh": "艾萨拉",
         "en": "Azshara",
@@ -466,10 +463,7 @@
     },
     {
       "id": "teldrassil",
-      "position": {
-        "x": 4000,
-        "y": 3100
-      },
+      "position": { "x": 4000, "y": 3100 },
       "languages": {
         "zh": "泰达希尔",
         "en": "Teldrassil",
@@ -481,10 +475,7 @@
     },
     {
       "id": "darkshore",
-      "position": {
-        "x": 3700,
-        "y": 3000
-      },
+      "position": { "x": 3700, "y": 3000 },
       "languages": {
         "zh": "黑海岸",
         "en": "Darkshore",
@@ -493,6 +484,49 @@
       },
       "textColor": "#673AB7",
       "fontSize": 22
+    },
+    {
+      "id": "VitePress",
+      "position": { "x": 4691, "y": 1304 },
+      "languages": {
+        "zh": "本项目基于 Vitepress 构建",
+        "en": "This project is built with VitePress",
+        "ko": "본 프로젝트는 VitePress로 구축되었습니다",
+        "ja": "本プロジェクトはVitePressで構築されています"
+      },
+      "textColor": "#E0BB0E",
+      "textStrokeColor": "#004080",
+      "textStrokeWidth": 5,
+      "fontSize": 80
+    },
+    {
+      "id": "url",
+      "position": { "x": 4710, "y": 1415 },
+      "languages": {
+        "zh": "wow-map.pages.dev",
+        "en": "wow-map.pages.dev",
+        "ko": "wow-map.pages.dev",
+        "ja": "wow-map.pages.dev"
+      },
+      "textColor": "#E0BB0E",
+      "textStrokeColor": "#004080",
+      "textStrokeWidth": 5,
+      "fontSize": 80
+    },
+    {
+      "id": "thing",
+      "position": { "x": 4689, "y": 1055 },
+      "languages": {
+        "zh": "做您从未做过的事",
+        "en": "Do you never done thing",
+        "ko": "한 번도 해보지 않은 일을 하라",
+        "ja": "今までやったことのないことをしよう"
+      },
+      "textColor": "#E0BB0E",
+      "textStrokeColor": "#004080",
+      "textStrokeWidth": 14,
+      "fontSize": 200
+      
     }
   ]
 }
