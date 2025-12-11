@@ -7,15 +7,13 @@
 	"license": "MIT",
 	"type": "module",
 	"engines": {
-		"node": ">=18.0.0",
-		"pnpm": ">=8.0.0"
+		"node": ">=20.0.0",
+		"pnpm": ">=8.7.1"
 	},
 	"scripts": {
 		"dev": "vitepress dev docs",
 		"build": "vitepress build docs",
 		"preview": "vitepress preview docs",
-		"generate-tiles": "node scripts/generate-tiles.js",
-		"serve-tiles": "node scripts/tile-server.js",
 		"lint": "prettier --cache --check . && eslint --cache .",
 		"format": "prettier --cache --write .",
 		"preinstall": "npx only-allow pnpm"

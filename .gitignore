@@ -1,4 +1,4 @@
-# 依赖目录
+# 依赖
 node_modules/
 .npm
 .yarn
@@ -6,53 +6,27 @@ node_modules/
 # 构建输出
 dist/
 .temp/
+docs/.vitepress/dist
 docs/.vitepress/cache
 
-# 本地环境文件
+# 环境变量
 .env
 .env.local
 .env.*.local
 
-# 日志文件
+# 日志
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# 编辑器目录
+# 编辑器
 .idea/
 .vscode/
 *.swp
 *.swo
 
-# 系统文件
-.DS_Stor# 依赖目录
-node_modules/
-.npm
-.yarn
-
-# 构建输出
-dist/
-.temp/
-.cache/
-
-# 本地环境文件
-.env
-.env.local
-.env.*.local
-
-# 日志文件
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# 编辑器目录
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# 系统文件
+# 系统
 .DS_Store
 Thumbs.db
+目录树.txt

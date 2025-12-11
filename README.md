@@ -68,10 +68,9 @@ cd 您的文件夹路径/wow-map
 1. 安装项目所需依赖：
 
 ```bash
+npm install -g pnpm
 
-Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-
-npm install
+pnpm install
 # 或者使用 yarn（如果已安装）
 # yarn install
 ```

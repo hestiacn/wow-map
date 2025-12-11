@@ -254,7 +254,7 @@
             </div>
           </div>
           <div class="coordinate-hint">
-            <small>💡 复制坐标后，可添加到地图数据 public\data\map-data.json 文件中</small>
+            <small>复制坐标后，可添加到地图数据 public\data\map-data.json 文件中</small>
           </div>
         </div>
         

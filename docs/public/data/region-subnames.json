@@ -487,7 +487,7 @@
     },
     {
       "id": "VitePress",
-      "position": { "x": 4691, "y": 1304 },
+      "position": { "x": 4721, "y": 7571 },
       "languages": {
         "zh": "本项目基于 Vitepress 构建",
         "en": "This project is built with VitePress",
@@ -501,7 +501,7 @@
     },
     {
       "id": "url",
-      "position": { "x": 4710, "y": 1415 },
+      "position": { "x": 4724, "y": 7707 },
       "languages": {
         "zh": "wow-map.pages.dev",
         "en": "wow-map.pages.dev",

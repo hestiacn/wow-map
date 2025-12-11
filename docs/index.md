@@ -12,7 +12,10 @@ hero:
     - theme: brand
       text: 进入地图编辑器
       link: docs/map
-    - theme: alt
+    - theme: brand
+      text: 文档查看
+      link: docs/help/use
+    - theme: brand
       text: 项目源码
       link: https://github.com/hestiacn/wow-map  
 
