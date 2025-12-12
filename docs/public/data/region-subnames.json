@@ -489,7 +489,7 @@
       "id": "VitePress",
       "position": { "x": 4721, "y": 7571 },
       "languages": {
-        "zh": "本项目基于 Vitepress 构建",
+        "zh": "本地图基于 Vitepress 构建",
         "en": "This project is built with VitePress",
         "ko": "본 프로젝트는 VitePress로 구축되었습니다",
         "ja": "本プロジェクトはVitePressで構築されています"

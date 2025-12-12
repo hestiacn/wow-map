@@ -2157,23 +2157,7 @@ export default {
       
       this.ctx.fillStyle = isHover ? '#000000' : '#FFFFFF';
       this.ctx.fillText(text, x, y - offset + 10);
-      
-      // 为交通点添加额外说明
-      if (point.note) {
-        const noteText = point.note[this.currentLanguage];
-        if (noteText && this.viewport.scale > 0.7) {
-          this.ctx.font = `12px Arial`;
-          this.ctx.fillStyle = isHover ? 'rgba(255, 255, 0, 0.8)' : 'rgba(0, 0, 0, 0.6)';
-          this.ctx.fillRect(
-            x - textWidth / 2 - 6,
-            y - offset - 25,
-            textWidth + 12,
-            16
-          );
-          this.ctx.fillStyle = isHover ? '#000000' : '#FFFFFF';
-          this.ctx.fillText(noteText, x, y - offset - 15);
-        }
-      }
+
     },
     
     drawFlightPaths() {
@@ -2267,104 +2251,88 @@ export default {
 
     // 新增：绘制交通线路（不连接）
     drawTransportLine(pointA, pointB, connectionType) {
-      let coordsA, coordsB;
-      
-      if (this.currentRegion === 'full') {
-        coordsA = { x: pointA.position.x, y: pointA.position.y };
-        coordsB = { x: pointB.position.x, y: pointB.position.y };
-      } else {
-        const region = this.mapData?.regions[this.currentRegion];
-        if (!region || pointA.region !== this.currentRegion || pointB.region !== this.currentRegion) {
-          return;
+        let coordsA, coordsB;
+        if (this.currentRegion === 'full') {
+            coordsA = { x: pointA.position.x, y: pointA.position.y };
+            coordsB = { x: pointB.position.x, y: pointB.position.y };
+        } else {
+            const region = this.mapData?.regions[this.currentRegion];
+            if (!region || pointA.region !== this.currentRegion || pointB.region !== this.currentRegion) {
+            return;
+            }
+            coordsA = {
+            x: ((pointA.position.x - region.bounds.x) / region.bounds.width) * this.canvas.width,
+            y: ((pointA.position.y - region.bounds.y) / region.bounds.height) * this.canvas.height
+            };
+            coordsB = {
+            x: ((pointB.position.x - region.bounds.x) / region.bounds.width) * this.canvas.width,
+            y: ((pointB.position.y - region.bounds.y) / region.bounds.height) * this.canvas.height
+            };
         }
-        
-        coordsA = {
-          x: ((pointA.position.x - region.bounds.x) / region.bounds.width) * this.canvas.width,
-          y: ((pointA.position.y - region.bounds.y) / region.bounds.height) * this.canvas.height
+        const dx = coordsB.x - coordsA.x;
+        const dy = coordsB.y - coordsA.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const dirX = dx / distance;
+        const dirY = dy / distance;
+        const extensionLength = Math.min(150, distance * 0.3);
+        const extensionEndA = {
+            x: coordsA.x + dirX * extensionLength,
+            y: coordsA.y + dirY * extensionLength
+        };
+        const extensionEndB = {
+            x: coordsB.x - dirX * extensionLength,
+            y: coordsB.y - dirY * extensionLength
+        };
+
+        const textStartDistance = 80;
+        const textStartA = {
+            x: coordsA.x + dirX * textStartDistance,
+            y: coordsA.y + dirY * textStartDistance
         };
         
-        coordsB = {
-          x: ((pointB.position.x - region.bounds.x) / region.bounds.width) * this.canvas.width,
-          y: ((pointB.position.y - region.bounds.y) / region.bounds.height) * this.canvas.height
+        const textStartB = {
+            x: coordsB.x - dirX * textStartDistance,
+            y: coordsB.y - dirY * textStartDistance
         };
-      }
-      
-      // 计算方向向量
-      const dx = coordsB.x - coordsA.x;
-      const dy = coordsB.y - coordsA.y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      
-      // 归一化方向向量
-      const dirX = dx / distance;
-      const dirY = dy / distance;
-      
-      // 设置延伸长度（固定长度）
-      const extensionLength = Math.min(150, distance * 0.3);
-      
-      // 计算延伸段的终点
-      const extensionEndA = {
-        x: coordsA.x + dirX * extensionLength,
-        y: coordsA.y + dirY * extensionLength
-      };
-      
-      const extensionEndB = {
-        x: coordsB.x - dirX * extensionLength,
-        y: coordsB.y - dirY * extensionLength
-      };
-      
-      // 根据连接类型确定样式
-      let lineStyle = this.getConnectionStyle(connectionType);
-      
-      // 绘制从A点出发的延伸线
-      this.ctx.strokeStyle = lineStyle.color;
-      this.ctx.lineWidth = lineStyle.width; // 固定宽度
-      this.ctx.setLineDash(lineStyle.dash);
-      this.ctx.lineCap = 'round';
-      this.ctx.beginPath();
-      this.ctx.moveTo(coordsA.x, coordsA.y);
-      this.ctx.lineTo(extensionEndA.x, extensionEndA.y);
-      this.ctx.stroke();
-      
-      // 绘制从B点出发的延伸线
-      this.ctx.beginPath();
-      this.ctx.moveTo(coordsB.x, coordsB.y);
-      this.ctx.lineTo(extensionEndB.x, extensionEndB.y);
-      this.ctx.stroke();
-      
-      // 绘制箭头
-      this.drawArrow(extensionEndA, { x: dirX, y: dirY }, lineStyle.color, connectionType);
-      this.drawArrow(extensionEndB, { x: -dirX, y: -dirY }, lineStyle.color, connectionType);
-      
-      this.ctx.setLineDash([]);
+        let lineStyle = this.getConnectionStyle(connectionType);
+        this.ctx.strokeStyle = lineStyle.color;
+        this.ctx.lineWidth = lineStyle.width;
+        this.ctx.setLineDash(lineStyle.dash);
+        this.ctx.lineCap = 'round';
+        this.ctx.beginPath();
+        this.ctx.moveTo(coordsA.x, coordsA.y);
+        this.ctx.lineTo(extensionEndA.x, extensionEndA.y);
+        this.ctx.stroke();
+        this.ctx.beginPath();
+        this.ctx.moveTo(coordsB.x, coordsB.y);
+        this.ctx.lineTo(extensionEndB.x, extensionEndB.y);
+        this.ctx.stroke();
+        this.drawArrow(extensionEndA, { x: dirX, y: dirY }, lineStyle.color, connectionType);
+        this.drawArrow(extensionEndB, { x: -dirX, y: -dirY }, lineStyle.color, connectionType);
+        
+        this.drawDirectionText(textStartA, { x: dirX, y: dirY }, pointA, pointB, true);
+        this.drawDirectionText(textStartB, { x: -dirX, y: -dirY }, pointB, pointA, false);
+        
+        this.ctx.setLineDash([]);
     },
 
     // 新增：绘制箭头
-    drawArrow(position, direction, color, type) {
-      const arrowLength = 15; // 固定箭头长度
-      const arrowWidth = 10; // 固定箭头宽度
-      
-      // 计算箭头尖端位置
+    drawArrow(position, direction, color, type, fromPoint = null, toPoint = null, isFromA = true) {
+      const arrowLength = 15;
+      const arrowWidth = 10;
       const tipX = position.x + direction.x * arrowLength;
       const tipY = position.y + direction.y * arrowLength;
-      
-      // 计算垂直方向
       const perpendicularX = -direction.y;
       const perpendicularY = direction.x;
-      
-      // 计算箭头两个底角
       const leftX = position.x + perpendicularX * arrowWidth / 2;
       const leftY = position.y + perpendicularY * arrowWidth / 2;
       const rightX = position.x - perpendicularX * arrowWidth / 2;
       const rightY = position.y - perpendicularY * arrowWidth / 2;
-      
-      // 根据类型调整箭头样式
       let arrowStyle = this.getArrowStyle(type);
       
       this.ctx.fillStyle = color;
       this.ctx.strokeStyle = arrowStyle.strokeColor;
-      this.ctx.lineWidth = arrowStyle.lineWidth; // 固定线宽
-      
-      // 绘制箭头
+      this.ctx.lineWidth = arrowStyle.lineWidth; 
       this.ctx.beginPath();
       this.ctx.moveTo(tipX, tipY);
       this.ctx.lineTo(leftX, leftY);
@@ -2372,26 +2340,112 @@ export default {
       this.ctx.closePath();
       
       this.ctx.fill();
-      
-      // 如果需要描边
       if (arrowStyle.strokeColor) {
         this.ctx.stroke();
       }
+      if (fromPoint && toPoint) {
+        this.drawDirectionText(position, direction, fromPoint, toPoint, isFromA);
+      }
     },
+    // 新增：绘制方向文本
+    drawDirectionText(position, direction, fromPoint, toPoint, isFromA) {
+      const textOffset = 40;
+      const textX = position.x + direction.x * textOffset;
+      const textY = position.y + direction.y * textOffset;
+      
+      const currentLang = this.currentLanguage;
+      let text = '';
+      let factionText = '';
+      const destName = toPoint.name[currentLang] || toPoint.name.zh || toPoint.name.en || '未知';
+      
+      switch (toPoint.type) {
+        case 'ship':
+          text = `船舶开往${destName}`;
+          factionText = this.getFactionName(toPoint.faction);
+          break;
+        case 'zeppelin':
+          text = `飞艇开往${destName}`;
+          factionText = this.getFactionName(toPoint.faction);
+          break;
+        case 'special':
+          text = `地铁开往${destName}`;
+          factionText = this.getFactionName(toPoint.faction);
+          break;
+        default:
+          return;
+      }
+      
+      if (factionText && factionText !== '未知') {
+        text += `（${factionText}）`;
+      }
+      
+      this.ctx.save();
+      
+      const angle = Math.atan2(direction.y, direction.x);
+      const angleDegrees = angle * (180 / Math.PI);
+      
+      let textVerticalOffset = 0;
+      let shouldRotate = true;
+      
+      if (angleDegrees >= -90 && angleDegrees <= 90) {
+        textVerticalOffset = 15;
+      } else {
+        textVerticalOffset = -15;
+      }
+      
+      this.ctx.fillStyle = '#FFFFFF';
+      this.ctx.strokeStyle = '#000000';
+      this.ctx.lineWidth = 1;
+      this.ctx.font = 'bold 12px Arial';
+      this.ctx.textAlign = 'center';
+      this.ctx.textBaseline = 'middle';
+      
+      this.ctx.translate(textX, textY);
+      
+      if (shouldRotate) {
+        let adjustedAngle = angle;
+        if (angleDegrees > 90 && angleDegrees < 270) {
+          adjustedAngle += Math.PI;
+        }
+        this.ctx.rotate(adjustedAngle);
+      }
 
+      const offsetY = textVerticalOffset;
+
+      const textMetrics = this.ctx.measureText(text);
+      const padding = 4;
+      const bgWidth = textMetrics.width + padding * 2;
+      const bgHeight = 18;
+
+      this.ctx.fillStyle = 'rgba(15, 112, 96, 0.01)';
+      this.ctx.fillRect(-bgWidth / 2, offsetY - bgHeight / 2, bgWidth, bgHeight);
+      
+      this.ctx.strokeStyle = '#108d7802';
+      this.ctx.lineWidth = 1;
+      this.ctx.strokeRect(-bgWidth / 2, offsetY - bgHeight / 2, bgWidth, bgHeight);
+      
+      this.ctx.strokeStyle = '#108d7802';
+      this.ctx.lineWidth = 2;
+      this.ctx.strokeText(text, 0, offsetY);
+      // 箭头文本颜色
+      this.ctx.fillStyle = '#fdfdfdff'; 
+      this.ctx.fillText(text, 0, offsetY);
+      
+      this.ctx.restore();
+    },
     // 新增：获取箭头样式
     getArrowStyle(type) {
       const styles = {
         ship: {
-          strokeColor: '#000000',
+          strokeColor: '#108d7802',
           lineWidth: 1
         },
         zeppelin: {
-          strokeColor: '#000000',
+          strokeColor: '#108d7802',
           lineWidth: 1
         },
         special: {
-          strokeColor: '#000000',
+          strokeColor: '#108d7802',
           lineWidth: 1
         },
         flight: {
@@ -3113,13 +3167,11 @@ export default {
         return;
       }
 
-      // 创建符合您要求格式的导出数据
       const exportData = {};
       Object.keys(newRegions).forEach(key => {
         exportData[key] = newRegions[key];
       });
       
-      // 直接调用 RegionUtils.exportData 方法
       RegionUtils.exportData(exportData, 'wow-map-new-regions.json');
     },
 

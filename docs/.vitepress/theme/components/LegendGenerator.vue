@@ -1776,14 +1776,6 @@ export default {
   filter: drop-shadow(0 0 4px rgba(0,0,0,0.9));
 }
 
-.dungeon-icon.dungeon {
-  filter: drop-shadow(0 0 6px #8a2be2);
-}
-
-.dungeon-icon.raid {
-  filter: drop-shadow(0 0 6px #ff8c00);
-}
-
 /* 阵营标记点样式 */
 .faction-point {
   width: 24px;

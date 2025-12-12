@@ -559,16 +559,6 @@
         "note": { "zh": "航线：鲁瑟兰村 / 暴风城", "en": "Ship: Rut'theran / Stormwind" }
     },
     {
-        "id": "auberdine_ship_menethil",
-        "name": { "zh": "奥伯丁（米奈希尔港航线）", "en": "Auberdine (Menethil Route)" },
-        "type": "ship",
-        "faction": "alliance",
-        "region": "kalimdor",
-        "position": { "x": 3040, "y": 4100 },
-        "connections": ["menethil_ship"],
-        "note": { "zh": "航线：米奈希尔港", "en": "Ship: Menethil Harbor" }
-    },
-    {
         "id": "ruttheran_ship",
         "name": { "zh": "鲁瑟兰村", "en": "Rut'theran Village" },
         "type": "ship",
@@ -650,7 +640,7 @@
     },
     {
         "id": "gromgol_zeppelin",
-        "name": { "zh": "格罗姆高飞艇塔", "en": "Grom'gol Zeppelin Tower" },
+        "name": { "zh": "格罗姆高营地飞艇塔", "en": "Grom'gol Zeppelin Tower" },
         "type": "zeppelin",
         "faction": "horde",
         "region": "eastern-kingdoms",
@@ -975,6 +965,12 @@
       "bounds": { "x": 8435, "y": 6545, "width": 569, "height": 569 },
       "image": "/images/maps/regions/compass.webp",
       "canvasSize": { "width": 500, "height": 500 }
+    },
+    "legend": {
+      "name": { "zh": "图例", "en": "legend" },
+      "bounds": { "x": 4368, "y": 4209, "width": 709, "height": 1521 },
+      "image": "/images/maps/regions/legend.webp",
+      "canvasSize": { "width": 1000, "height": 2148 }
     },
     "logo": {
       "name": { "zh": "cn-logo", "en": "en-logo" },

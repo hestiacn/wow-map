@@ -1,4 +1,4 @@
-import nav from "./nav";
+import navConfig from "./nav";
 import LocalSearchPlugin from "./plugins/localSearchPlugin.js"
 
 export default {
@@ -25,14 +25,7 @@ export default {
   themeConfig: {
     logo: "/nav.webp",
     siteTitle: '魔兽世界地图编辑工具库',
-    nav: [
-      { text: '首页', link: '/' },
-      { text: '文档查看', link: 'docs/help/use' },
-      { text: '地图制作', link: 'docs/map' },
-      { text: '图例标识', link: 'docs/Legend' },
-      { text: '图片查看', link: 'images/demo/demo.webp' },
-      { text: '项目源码', link: 'https://github.com/hestiacn/wow-map' }
-    ],
+    nav: navConfig.nav,
     socialLinks: [
       { icon: 'github', link: 'https://github.com/hestiacn/wow-map' },
     ],

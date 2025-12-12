@@ -10,28 +10,18 @@ import './styles/rainbow.css';
 
 export default {
   extends: DefaultTheme,
-  
   Layout: () => {
     const { frontmatter, page } = useData();
-    
-    const isMapPage = page.value?.filePath?.includes('map') || 
-                     page.value?.relativePath?.includes('map') ||
-                     frontmatter.value?.layoutClass === 'map-page';
-    
-    const props = {
-      class: frontmatter.value?.layoutClass || (isMapPage ? 'map-page' : '')
-    };
-    
+    const isMapPage = page.value?.filePath?.includes('map') || page.value?.relativePath?.includes('map') || frontmatter.value?.layoutClass === 'map-page';
+    const props = { class: frontmatter.value?.layoutClass || (isMapPage ? 'map-page' : '') };
     if (isMapPage) {
       return h(DefaultTheme.Layout, props, {
         'sidebar': () => null,
         'aside': () => null,
         'doc-before': () => null,
         'doc-after': () => null,
-        "doc-after": () => h(BackToTop),
       });
     }
-    
     return h(DefaultTheme.Layout, props, {
       'not-found': () => h(NotFound),
     });

@@ -1,8 +1,8 @@
 {
 	"name": "wow-map-viewer",
 	"private": true,
-	"version": "1.0.0",
-	"description": "魔兽世界交互式地图查看器 - 基于 WebP 瓦片和 Leaflet",
+	"version": "1.0",
+	"description": "魔兽世界交互式地图编辑器 - 基于HTML5 Canvas API",
 	"repository": "https://github.com/hestiacn/wow-map",
 	"license": "MIT",
 	"type": "module",
