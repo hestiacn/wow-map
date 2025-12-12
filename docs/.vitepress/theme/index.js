@@ -42,7 +42,8 @@ export default {
     app.component('LegendGenerator', LegendGenerator);
     app.component('MapViewer', MapViewer);
     app.component('BackToTop', BackToTop);
-    
+    app.component('NotFound', NotFound);
+
     // 开发模式下暴露全局地图对象
     if (import.meta.env?.DEV) {
       app.config.globalProperties.$mapDebug = {
