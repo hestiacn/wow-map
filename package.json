@@ -1,0 +1,56 @@
+{
+	"name": "wow-map-viewer",
+	"private": true,
+	"version": "1.0",
+	"description": "魔兽世界交互式地图编辑器 - 基于HTML5 Canvas API",
+	"repository": "https://github.com/hestiacn/wow-map",
+	"license": "MIT",
+	"type": "module",
+	"engines": {
+		"node": ">=22.16.0",
+		"pnpm": ">=10.11.1"
+	},
+	"scripts": {
+		"build": "pnpm run docs:build",
+		"docs:dev": "vitepress dev docs",
+		"docs:build": "vitepress build docs",
+		"docs:preview": "vitepress preview docs",
+		"lint": "prettier --cache --check . && eslint --cache .",
+		"format": "prettier --cache --write .",
+		"preinstall": "npx only-allow pnpm",
+		"tiles": "node scripts/generate-tiles.js",
+		"serve-tiles": "node scripts/tile-server.js"
+	},
+	"dependencies": {
+		"canvas": "^3.2.0",
+		"dom-to-image-more": "^3.7.2",
+		"html2canvas": "^1.4.1",
+		"parallax-js": "^3.1.0",
+		"uuid": "^13.0.0"
+	},
+	"devDependencies": {
+		"@types/node": "^25.0.2",
+		"@vitejs/plugin-vue": "^6.0.3",
+		"@vueuse/core": "^14.1.0",
+		"chokidar": "^5.0.0",
+		"element-plus": "^2.12.0",
+		"eslint": "^9.39.2",
+		"eslint-config-prettier": "^10.1.8",
+		"express": "^5.2.1",
+		"husky": "^9.1.7",
+		"jsdom": "^27.3.0",
+		"lint-staged": "^16.2.7",
+		"prettier": "^3.7.4",
+		"sharp": "^0.34.5",
+		"typescript": "^5.9.3",
+		"vite": "^7.2.7",
+		"vitepress": "^1.6.4",
+		"vue": "^3.5.25"
+	},
+	"lint-staged": {
+		"*.{js,vue,md}": [
+			"prettier --write",
+			"eslint --fix"
+		]
+	}
+}

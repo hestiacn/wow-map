@@ -1,0 +1,7 @@
+cache
+node_modules
+dist
+.env
+*.pem
+auth.json
+*.toml
