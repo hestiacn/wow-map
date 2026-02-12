@@ -503,10 +503,10 @@
       "id": "url",
       "position": { "x": 4724, "y": 7707 },
       "languages": {
-        "zh": "wow-map.pages.dev",
-        "en": "wow-map.pages.dev",
-        "ko": "wow-map.pages.dev",
-        "ja": "wow-map.pages.dev"
+        "zh": "wowmap.org",
+        "en": "wowmap.org",
+        "ko": "wowmap.org",
+        "ja": "wowmap.org"
       },
       "textColor": "#E0BB0E",
       "textStrokeColor": "#004080",

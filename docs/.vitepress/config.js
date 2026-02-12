@@ -1,5 +1,4 @@
 import navConfig from "./nav";
-import LocalSearchPlugin from "./plugins/localSearchPlugin.js"
 
 const BUILD_YEAR = new Date().getFullYear();
 
@@ -23,11 +22,8 @@ export default {
     ['link', { rel: 'icon', href: '/favicon.pub/favicon.svg', type: 'image/svg+xml'}],
     ['link', { rel: 'mask-icon', href: '/favicon.pub/safari-pinned-tab.svg', color: '#ffd100'}],
     ['link', { rel: 'manifest', href: '/favicon.pub/site.webmanifest'}],
-    // ['script', { defer: true,src: 'https://cloud.umami.is/script.js','data-website-id': 'YOUR_WEBSITE_ID'}],
   ],
-  vite: {
-    plugins: [LocalSearchPlugin()]
-  },
+  vite: {},
   themeConfig: {
     logo: "/nav.webp",
     siteTitle: '魔兽世界地图编辑工具库',
@@ -59,7 +55,9 @@ export default {
             footer: {
               selectText: "选择",
               navigateText: "切换",
-              closeText: "关闭",},},
+              closeText: "关闭",
+            },
+          },
         },
       },
     },
@@ -89,12 +87,11 @@ export default {
     lightModeSwitchTitle: '切换到浅色模式',
     darkModeSwitchTitle: '切换到深色模式',
     editLink: {
-      pattern: 'https://github.com/hestiacn/wow-map/edit/master/docs/:path',
+      pattern: 'https://cnb.cool/docs.win/wowmap/-/blob/master/docs/:path',
       text: '在 微信开发平台 上编辑此页面',
     },
     footer: {
       message: '基于 <a href="https://developer.mozilla.org/docs/Web/API/Canvas_API" target="_blank" title="MDN Canvas API 文档"><img src="https://img.shields.io/badge/Canvas-API-orange?logo=html5" alt="Canvas API" style="display: inline-block !important; height: 20px; margin: -4px 0 0 3px; vertical-align: middle;"></a> 与 <a href="https://vitepress.dev" target="_blank" title="VitePress 官方站点"><img src="https://img.shields.io/npm/v/vitepress?style=flat-square&logo=vite&logoColor=white&label=VitePress&color=646cff" alt="VitePress" style="display: inline-block !important; height: 20px; margin: -4px 0 0 3px; vertical-align: middle;"></a> 框架构建',
-     
       copyright: '版权所有 © 2024-<span id="dynamicYear">' + BUILD_YEAR + '</span> 魔兽世界地图库 | 版权归属: <a href="https://www.blizzard.com" target="_blank" title="暴雪娱乐官方网站"><img src="https://img.shields.io/badge/Blizzard-Classic-005AC2?labelColor=005AC2&color=FFD100" alt="Blizzard" style="display: inline-block !important; height: 20px; margin: -4px 0 0 3px; vertical-align: middle;"></a>'
     },
     sidebarMenuLabel: '功能目录',

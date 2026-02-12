@@ -4,28 +4,40 @@ import { useData } from 'vitepress';
 import MapViewer from './components/MapViewer.vue';
 import BackToTop from './components/BackToTop.vue';
 import LegendGenerator from './components/LegendGenerator.vue';
+import GiscusComment from './components/GiscusComment.vue';
 import NotFound from './components/NotFound.vue';
 import './styles/custom.scss';
 import './styles/rainbow.css';
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
+
 export default {
   extends: DefaultTheme,
   Layout: () => {
     const { frontmatter, page } = useData();
-    const isMapPage = page.value?.filePath?.includes('map') || page.value?.relativePath?.includes('map') || frontmatter.value?.layoutClass === 'map-page';
-    const props = { class: frontmatter.value?.layoutClass || (isMapPage ? 'map-page' : '') };
+    const isMapPage = page.value?.filePath?.includes('map') || 
+                     page.value?.relativePath?.includes('map') || 
+                     frontmatter.value?.layoutClass === 'map-page';
+    
+    const props = { 
+      class: frontmatter.value?.layoutClass || (isMapPage ? 'map-page' : '') 
+    };
+
     if (isMapPage) {
       return h(DefaultTheme.Layout, props, {
         'sidebar': () => null,
         'aside': () => null,
         'doc-before': () => null,
-        'doc-after': () => null,
+        'doc-after': () => h(GiscusComment),
       });
     }
+
     return h(DefaultTheme.Layout, props, {
       'not-found': () => h(NotFound),
-      "doc-after": () => h(BackToTop), 
+        'doc-after': () => h('div', [
+        h(BackToTop),
+        h(GiscusComment)
+      ])
     });
   },
   
@@ -34,6 +46,7 @@ export default {
     app.use(ElementPlus);
     app.component('BackToTop', BackToTop);
     app.component('LegendGenerator', LegendGenerator);
+    app.component('GiscusComment', GiscusComment);
     app.component('MapViewer', MapViewer);
     app.component('NotFound', NotFound);
 
